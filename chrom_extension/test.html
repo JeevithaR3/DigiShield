@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Defender Test Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    p, span {
+      margin-bottom: 15px;
+    }
+    .blur-text {
+      filter: blur(5px);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>AI Defender Extension Test Page</h2>
+
+  <p>This is a normal, child-friendly sentence about the solar system.</p>
+  
+  <p>You are such an idiot, go disappear!</p> <!-- insult (should blur) -->
+
+  <span>I'm going to hurt you if you talk again.</span> <!-- threat -->
+
+  <p>You are a filthy piece of trash from that country.</p> <!-- identity attack -->
+
+  <p>He assaulted me last year </p> <!-- should blur -->
+ <!-- sexual_explicit -->
+
+  
+
+  <span>Math is fun and learning should be safe and exciting for everyone!</span>
+
+  <p>You're worthless and everyone hates you!</p> <!-- toxic general insult -->
+
+  <span>I love programming and reading books.</span>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+.blur-text {
+  filter: blur(6px);
+  transition: filter 0.5s ease;
+  cursor: pointer;
+}
+.blur-text:hover {
+  filter: none;
+}
+.blur-text {
+  filter: blur(6px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.blur-text {
+  filter: blur(5px);
+  background-color: white;
+  cursor: not-allowed;
+}
