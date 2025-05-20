@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Scan | DigiShield</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="alerts.html">Alerts</a>
+            <a href="flagged.html">Flagged</a>
+            <a href="settings.html">Settings</a>
+        </div>
+    </nav>
+    <div class="upload-scan-container">
+      <!-- Mascot Section -->
+        <div class="scan-mascot">
+            <img src="https://i.pinimg.com/736x/f1/7d/db/f17ddb244e3f2f6a720e61cd3f8161fb.jpg" alt="DigiShield Mascot" />
+            <div class="mascot-bubble">
+            Hi! I'm Digi, your safety shield.<br>
+            Upload your file and I'll scan it for you!
+            </div>
+        </div>
+        <h2>
+            <i class="fa-solid fa-cloud-arrow-up" style="color:#7e57c2; margin-right:14px; font-size:2.2em; vertical-align:middle;"></i>
+  
+        </h2>
+        <form id="scanForm">
+            <input type="file" id="scanFile" name="scanFile" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" required>
+            <img id="previewImg" style="display:none;max-width:100%;margin:12px auto 0 auto;border-radius:12px;box-shadow:0 2px 8px #b39ddb33;">
+            <button type="submit">🔍 Start Manual Scan</button>
+        </form>
+        <div id="scanResult"></div>
+        <div id="scanProgress" style="display:none;">
+            <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+            </div>
+            <span id="progressText">Scanning...</span>
+        </div>
+    </div>
+    <script>
+      // Image preview
+      document.getElementById('scanFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('previewImg');
+        if (file && file.type.startsWith('image/')) {
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = 'block';
+        } else {
+          preview.style.display = 'none';
+        }
+      });
+
+      // Scan progress and result
+      document.getElementById('scanForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const fileInput = document.getElementById('scanFile');
+        const progress = document.getElementById('scanProgress');
+        const fill = document.querySelector('.progress-bar-fill');
+        const result = document.getElementById('scanResult');
+        if (fileInput.files.length > 0) {
+          result.textContent = "";
+          progress.style.display = 'block';
+          fill.style.width = '0';
+          setTimeout(() => { fill.style.width = '100%'; }, 100);
+          setTimeout(() => {
+            progress.style.display = 'none';
+            result.textContent = "Scan complete! (Demo)";
+          }, 1800);
+        } else {
+          result.textContent = "Please select a file to scan.";
+        }
+      });
+    </script>
+</body>
+</html>
