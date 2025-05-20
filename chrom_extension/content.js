@@ -1,12 +1,15 @@
 console.log("AI Defender Extension: content.js loaded!");
 
-// 1. Sends a batch of text content to your Flask backend
+// 1. Sends a batch of text content and current page URL to your Flask backend
 async function analyzeBatch(texts) {
   try {
     const response = await fetch("http://127.0.0.1:5000/analyze_batch", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ texts }),
+      body: JSON.stringify({ 
+        texts,
+        url: window.location.href  // send current page URL
+      }),
     });
 
     if (!response.ok) {
