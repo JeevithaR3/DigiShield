@@ -1,0 +1,418 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+a:focus, button:focus {
+    outline: 2px solid #5edae8;
+    outline-offset: 2px;
+}
+
+body {
+    background: #0f1214;
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Dashboard Layout */
+body {
+    background: linear-gradient(135deg, 
+        #0a0c0e 0%, 
+        #0d1420 25%, 
+        #0f0a1e 50%, 
+        #0c0613 75%, 
+        #0a0c0e 100%);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+/* Overview Main Content */
+.overview-main {
+    margin-left: 280px;
+    margin-top: 60px;
+    padding: 2rem;
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.02);
+    min-height: calc(100vh - 60px);
+    overflow-y: auto;
+    border-radius: 16px 0 0 0;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Custom scrollbar for overview-main */
+.overview-main::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overview-main::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+}
+
+.overview-main::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    border-radius: 16px;
+}
+
+.overview-main h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(15, 18, 20, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Cards Section */
+.overview-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.overview-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.overview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(94, 218, 232, 0.15);
+}
+
+.overview-card h3 {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+}
+
+.overview-card p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.overview-number {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Sidebar */
+/* Sidebar */
+.dashboard-sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px; /* Offset for navbar */
+    width: 280px;
+    height: calc(100% - 60px);
+    background: rgba(15, 18, 20, 0.85);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    box-shadow: inset -3px 0 8px rgba(0, 0, 0, 0.4);
+    z-index: 99;
+}
+.dashboard-sidebar a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    padding: 0.75rem 1.3rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    margin-bottom: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.dashboard-sidebar a:hover .sidebar-icon,
+.dashboard-sidebar a.active .sidebar-icon {
+    transform: scale(1.1);
+}
+
+
+.dashboard-sidebar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, 
+        rgba(94, 218, 232, 0), 
+        rgba(94, 218, 232, 0.3), 
+        rgba(178, 96, 255, 0.3), 
+        rgba(178, 96, 255, 0));
+}
+
+/* Remove line from last sidebar item */
+.dashboard-sidebar a:last-child::after {
+    display: none;
+}
+
+/* Active link styling */
+.dashboard-sidebar a.active {
+    background: linear-gradient(135deg, rgba(94, 218, 232, 0.2), rgba(178, 96, 255, 0.2));
+    border-left: 3px solid #5edae8;
+}
+
+/* Glow for active items */
+.dashboard-sidebar a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, #5edae8, #b260ff);
+    box-shadow: 0 0 8px rgba(94, 218, 232, 0.6);
+}
+.sidebar-icon-container {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    transition: all 0.3s ease;
+}
+
+/* Icon styling - white color to show on gradient */
+.sidebar-icon {
+    color: white;
+}
+
+
+/* Hover effect for sidebar links */
+.dashboard-sidebar a:hover,
+.dashboard-sidebar a.active {
+    background: rgba(94, 218, 232, 0.15);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(94, 218, 232, 0.4);
+}
+
+/* Active link styling */
+.dashboard-sidebar a.active {
+    background: linear-gradient(135deg, rgba(94, 218, 232, 0.2), rgba(178, 96, 255, 0.2));
+    border-left: 3px solid #5edae8;
+}
+.dashboard-sidebar a:hover .sidebar-icon-container,
+.dashboard-sidebar a.active .sidebar-icon-container {
+    transform: rotate(5deg) scale(1.1);
+    box-shadow: 0 0 10px rgba(94, 218, 232, 0.5);
+}
+
+/* Hover effect for icons */
+.dashboard-sidebar a:hover .sidebar-icon,
+.dashboard-sidebar a.active .sidebar-icon {
+    transform: scale(1.1);
+}
+/* Add subtle gradient line under each sidebar item */
+.dashboard-sidebar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(to right, 
+        rgba(94, 218, 232, 0), 
+        rgba(94, 218, 232, 0.3), 
+        rgba(178, 96, 255, 0.3), 
+        rgba(178, 96, 255, 0));
+}
+
+/* Remove the line from the last item */
+.dashboard-sidebar a:last-child::after {
+    display: none;
+}
+/* Add a subtle glow for active items */
+.dashboard-sidebar a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, #5edae8, #b260ff);
+    box-shadow: 0 0 8px rgba(94, 218, 232, 0.6);
+}
+
+
+
+/* Recent Activity Section */
+.overview-activity {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.overview-activity h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.overview-activity ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.overview-activity li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.overview-activity li:last-child {
+    border-bottom: none;
+}
+
+/* Scroll to Top Button */
+#scrollTopBtn:hover {
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+}
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 18, 20, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 1rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 99;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+    
+    .nav-links {
+        display: none; /* Hide on small screens */
+    }
+    
+    .dashboard-sidebar {
+        width: 220px;
+    }
+    
+    .main-content {
+        margin-left: 220px;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-sidebar {
+        width: 180px;
+    }
+    
+    .main-content {
+        margin-left: 180px;
+        padding: 1rem;
+    }
+    
+    .dashboard-welcome h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

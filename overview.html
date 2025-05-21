@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiShield - Dashboard Overview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="overview.css"/>
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="alerts.html">Alerts</a>
+            <a href="flagged.html">Flagged</a>
+            <a href="settings.html">Settings</a>
+        </div>
+    </nav>
+    <aside class="dashboard-sidebar">
+        <a href="overview.html" class="active">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-house sidebar-icon"></i>
+            </div>
+            Overview
+        </a>
+        <a href="scan_img.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
+            </div>
+            Upload Scan
+        </a>
+        <a href="alert_history.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
+            </div>
+            Alert History
+        </a>
+        <a href="support.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-comments sidebar-icon"></i>
+            </div>
+            Support
+        </a>
+    </aside>
+
+    <main class="overview-main">
+        <h2>Dashboard Overview</h2>
+        <section class="overview-cards">
+            <div class="overview-card">
+                <h3>Flagged Messages</h3>
+                <p><span class="overview-number">3</span> flagged today</p>
+            </div>
+            <div class="overview-card">
+                <h3>Manual Scans</h3>
+                <p><span class="overview-number">1</span> pending</p>
+            </div>
+            <div class="overview-card">
+                <h3>New Alerts</h3>
+                <p><span class="overview-number">2</span> in last hour</p>
+            </div>
+            <div class="overview-card">
+                <h3>Safe Users</h3>
+                <p><span class="overview-number">27</span> this week</p>
+            </div>
+        </section>
+        <section class="overview-activity">
+            <h3>Recent Activity</h3>
+            <ul>
+                <li>New flagged message from <strong>kiddo123</strong></li>
+                <li>Manual scan completed for <strong>CoolKid99</strong></li>
+                <li>Alert resolved by <strong>ParentUser</strong></li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>DigiShield &copy; 2025. Protecting Children Online</p>
+    </footer>
+    <button id="scrollTopBtn" title="Go to top" style="display:none;position:fixed;bottom:32px;right:32px;padding:12px 18px;font-size:1.5rem;border-radius:50%;background:#7e57c2;color:#fff;border:none;box-shadow:0 2px 8px rgba(126,87,194,0.18);cursor:pointer;z-index:99;">↑</button>
+    <script>
+      // Show button when scrolled down
+      window.onscroll = function() {
+        document.getElementById('scrollTopBtn').style.display = (window.scrollY > 200) ? 'block' : 'none';
+      };
+      // Scroll to top on click
+      document.getElementById('scrollTopBtn').onclick = function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      };
+    </script>
+</body>
+</html>

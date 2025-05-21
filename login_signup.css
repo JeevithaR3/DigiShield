@@ -1,0 +1,273 @@
+/* Reset and font */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+a:focus, button:focus {
+    outline: 2px solid #5edae8;
+    outline-offset: 2px;
+}
+/* Enhanced container for better handling of tall content */
+body {
+    background: linear-gradient(135deg, 
+    #0a0c0e 0%, 
+    #0d1420 25%, 
+    #0f0a1e 50%, 
+    #0c0613 75%, 
+    #0a0c0e 100%);
+  
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+   /* Increased top/bottom padding */
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2),
+              0 0 60px rgba(94, 218, 232, 0.1),
+              0 0 100px rgba(178, 96, 255, 0.05);
+  width: 100%;
+  max-width: 400px;
+  padding: 35px 30px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: 90vh;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  margin: 20px 0;
+ /* Add margin to ensure there's space at top and bottom */
+}
+
+/* Make the forms more compact */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Reduced from 15px */
+  margin-bottom: 10px;
+}
+
+header h1 {
+  font-size: 1.7rem; /* Slightly smaller */
+  margin-bottom: 6px; /* Reduced space */
+  background: linear-gradient(135deg, #5edae8, #b260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+header p {
+  font-size: 0.9rem; /* Smaller */
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 20px; /* Reduced space */
+}
+
+/* Tab navigation - more compact */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Reduced from 25px */
+  gap: 10px; /* Reduced from 12px */
+}
+
+/* Adjust input fields to be more compact */
+.auth-form input {
+  padding: 9px 14px; /* Reduced height */
+}
+
+/* Add a start position for forms to ensure they start at the top */
+#login-form, #signup-form, #forgot-password {
+  position: relative;
+  top: 0;
+}
+
+/* Add a script to ensure form is at top when switching tabs */
+@keyframes smoothScroll {
+  0% { scroll-margin-top: 0; }
+  100% { scroll-margin-top: 10px; }
+}
+
+.container {
+  scroll-behavior: smooth;
+}
+
+/* Media query adjustment for smaller screens */
+@media (max-height: 700px) {
+  .container {
+    padding: 25px 20px;
+    max-height: 85vh;
+  }
+  
+  .auth-form {
+    gap: 10px;
+  }
+  
+  .tabs button {
+    padding: 8px 16px;
+  }
+}
+
+/* Header */
+header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  /* Gradient text like landing page */
+  background: linear-gradient(135deg, #5edae8, #b260ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+header p {
+  font-size: 1rem;
+  /* Updated to match landing page subtitle color */
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 25px;
+}
+
+/* Tab navigation */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+  gap: 12px;
+}
+
+.tabs button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tabs button.active,
+.tabs button:hover {
+  background: linear-gradient(135deg, #5edae8, #b260ff);
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(94, 218, 232, 0.3);
+  border: none;
+}
+
+/* Auth forms */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.auth-form input {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.auth-form input:focus {
+  outline: 2px solid #5edae8;
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons */
+.primary-btn {
+  background: linear-gradient(135deg, #5edae8, #b260ff);
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(94, 218, 232, 0.3);
+}
+
+.primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(94, 218, 232, 0.4);
+}
+
+/* Forgot password link */
+.forgot-password {
+  text-align: right;
+  margin-top: -8px;
+  margin-bottom: 10px;
+}
+
+.forgot-password a {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.forgot-password a:hover {
+  color: #5edae8;
+  text-decoration: none;
+}
+
+/* Form toggle visibility */
+.hidden {
+  display: none;
+}
+
+/* Messages */
+.message {
+  font-size: 0.9rem;
+  margin-top: 8px;
+  color: #ffffff;
+  min-height: 20px;
+}
+
+/* Reset form */
+#forgot-password h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+#forgot-password p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Scrollbar */
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+.container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .container {
+    padding: 25px 20px;
+  }
+}

@@ -1,0 +1,230 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #0f1214;
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(15, 18, 20, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero {
+    margin-top: 120px;
+    padding: 4rem 2rem;
+    text-align: center;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hero h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 3rem;
+}
+
+/* CTA Buttons */
+.cta-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.cta-button {
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.primary-cta {
+    background: linear-gradient(135deg, #5edae8, #b260ff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(94, 218, 232, 0.3);
+}
+
+.secondary-cta {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+}
+
+.primary-cta:hover {
+    box-shadow: 0 6px 20px rgba(94, 218, 232, 0.4);
+}
+
+.secondary-cta:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Features Section */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 5rem 0;
+}
+
+.feature {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(94, 218, 232, 0.2), rgba(178, 96, 255, 0.2));
+}
+
+/* Footer */
+footer {
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .cta-container {
+        flex-direction: column;
+    }
+
+    .cta-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero {
+        padding: 3rem 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .feature {
+        padding: 1.5rem;
+    }
+}
