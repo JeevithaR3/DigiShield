@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Safety Buddy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Comic+Neue:wght@700&family=Fredoka+One&display=swap');
+        
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #9cecfb, #65c7f7, #0052d4);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            color: #333;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #three-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            color: #fff;
+            text-shadow: 3px 3px 0 #FF5722, 
+                         6px 6px 0 rgba(0,0,0,0.15);
+            margin: 10px 0;
+            animation: bounce 2s infinite;
+            letter-spacing: 2px;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .tutor-container {
+            display: flex;
+            justify-content: space-between;
+            flex: 1;
+        }
+        
+        .character-container {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .character {
+            width: 240px;
+            height: 300px;
+            position: relative;
+            margin-bottom: 20px;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+        }
+        
+        .character-head {
+            width: 130px;
+            height: 130px;
+            background: #8E44AD;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            border: 5px solid #663399;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .character-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .character-eye {
+            width: 30px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            z-index: 2;
+        }
+        
+        .character-eye.left {
+            left: 30px;
+        }
+        
+        .character-eye.right {
+            right: 30px;
+        }
+        
+        .character-pupil {
+            width: 15px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 7px;
+        }
+        
+        .character-mouth {
+            width: 70px;
+            height: 35px;
+            background: #E74C3C;
+            border-radius: 0 0 35px 35px;
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            transition: height 0.1s ease;
+        }
+        
+        .character-tongue {
+            width: 50px;
+            height: 20px;
+            background: #FF9999;
+            border-radius: 25px 25px 0 0;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .character-body {
+            width: 180px;
+            height: 160px;
+            background: #9B59B6;
+            border-radius: 30px;
+            position: absolute;
+            top: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid #663399;
+        }
+        
+        .character-arm {
+            width: 30px;
+            height: 100px;
+            background: #9B59B6;
+            border-radius: 15px;
+            position: absolute;
+            top: 140px;
+            border: 3px solid #663399;
+        }
+        
+        .character-arm.left {
+            left: 40px;
+            transform: rotate(25deg);
+        }
+        
+        .character-arm.right {
+            right: 40px;
+            transform: rotate(-25deg);
+        }
+        
+        .character-glasses {
+            width: 140px;
+            height: 40px;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .character-glasses-lens {
+            width: 40px;
+            height: 40px;
+            border: 5px solid #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+        }
+        
+        .character-glasses-lens.left {
+            left: 20px;
+        }
+        
+        .character-glasses-lens.right {
+            right: 20px;
+        }
+        
+        .character-glasses-bridge {
+            width: 30px;
+            height: 5px;
+            background: #FFD700;
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .speech-bubble {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            width: 90%;
+            margin: 0 auto;
+            position: relative;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 3px solid #8E44AD;
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-top-color: white;
+            border-bottom: 0;
+            margin-left: -20px;
+            margin-bottom: -20px;
+        }
+        
+        .speech-bubble.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .q-and-a {
+            width: 65%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 25px;
+            overflow-y: auto;
+            max-height: 500px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid #FF9800;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .flashcard {
+            background: linear-gradient(135deg, #FFF176, #FFEB3B);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 3px dashed #FF9800;
+        }
+        
+        .flashcard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0,0,0,0.2);
+        }
+        
+        .question {
+            font-family: 'Comic Neue', cursive;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #E64A19;
+            margin: 0;
+            padding-right: 30px;
+        }
+        
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #FF9800;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .flashcard.active .answer {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flashcard:after {
+            content: '?';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: #FF5722;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .flashcard.active:after {
+            content: '!';
+            background: #4CAF50;
+            transform: rotate(360deg);
+        }
+        
+        .floating-icons {
+            position: absolute;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .icon {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+        }
+        
+        .icon.computer {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234FC3F7"><path d="M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" /></svg>');
+        }
+        
+        .icon.lock {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD54F"><path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg>');
+        }
+        
+        .icon.shield {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234CAF50"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>');
+        }
+        
+        .icon.wifi {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239C27B0"><path d="M12,21L15.6,16.2C14.6,15.45 13.35,15 12,15C10.65,15 9.4,15.45 8.4,16.2L12,21M12,3C7.95,3 4.21,4.34 1.2,6.6L3,9C5.5,7.12 8.62,6 12,6C15.38,6 18.5,7.12 21,9L22.8,6.6C19.79,4.34 16.05,3 12,3M12,9C9.3,9 6.81,9.89 4.8,11.4L6.6,13.8C8.1,12.67 9.97,12 12,12C14.03,12 15.9,12.67 17.4,13.8L19.2,11.4C17.19,9.89 14.7,9 12,9Z" /></svg>');
+        }
+        
+        .icon.warning {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F44336"><path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" /></svg>');
+        }
+        
+        .icon.robot {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2303A9F4"><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z" /></svg>');
+        }
+        
+        .icon.gamepad {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FF5722"><path d="M7.97,16L5,19C4.67,19.3 4.23,19.5 3.75,19.5A1.75,1.75 0 0,1 2,17.75V17.5L3,10.12C3.21,7.81 5.14,6 7.5,6H16.5C18.86,6 20.79,7.81 21,10.12L22,17.5V17.75A1.75,1.75 0 0,1 20.25,19.5C19.77,19.5 19.33,19.3 19,19L16.03,16H7.97M7,8V10H5V11H7V13H8V11H10V10H8V8H7M16.5,8A0.75,0.75 0 0,0 15.75,8.75A0.75,0.75 0 0,0 16.5,9.5A0.75,0.75 0 0,0 17.25,8.75A0.75,0.75 0 0,0 16.5,8M14.75,9.75A0.75,0.75 0 0,0 14,10.5A0.75,0.75 0 0,0 14.75,11.25A0.75,0.75 0 0,0 15.5,10.5A0.75,0.75 0 0,0 14.75,9.75M18.25,9.75A0.75,0.75 0 0,0 17.5,10.5A0.75,0.75 0 0,0 18.25,11.25A0.75,0.75 0 0,0 19,10.5A0.75,0.75 0 0,0 18.25,9.75M16.5,11.5A0.75,0.75 0 0,0 15.75,12.25A0.75,0.75 0 0,0 16.5,13A0.75,0.75 0 0,0 17.25,12.25A0.75,0.75 0 0,0 16.5,11.5Z" /></svg>');
+        }
+        
+        .icon.star {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFC107"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>');
+        }
+        
+        #playVoiceBtn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 180px;
+            display: none;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        #playVoiceBtn:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+        
+        #playVoiceBtn:active {
+            transform: scale(0.95);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            border-radius: 0;
+            opacity: 0;
+        }
+        
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 70px;
+            background: #FF5722;
+            border-radius: 50%;
+            bottom: -100px;
+            opacity: 0.8;
+        }
+        
+        .balloon:before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #ccc;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 40%;
+        }
+        
+        .balloon.blue { background: #2196F3; }
+        .balloon.green { background: #4CAF50; }
+        .balloon.purple { background: #9C27B0; }
+        .balloon.yellow { background: #FFEB3B; }
+        
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }000/svg" viewBox="0 0 24 24" fill="%23FFD54F"><path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" /></svg>');
+        }
+        
+        .icon.shield {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234CAF50"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>');
+        }
+        
+        .icon.wifi {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239C27B0"><path d="M12,21L15.6,16.2C14.6,15.45 13.35,15 12,15C10.65,15 9.4,15.45 8.4,16.2L12,21M12,3C7.95,3 4.21,4.34 1.2,6.6L3,9C5.5,7.12 8.62,6 12,6C15.38,6 18.5,7.12 21,9L22.8,6.6C19.79,4.34 16.05,3 12,3M12,9C9.3,9 6.81,9.89 4.8,11.4L6.6,13.8C8.1,12.67 9.97,12 12,12C14.03,12 15.9,12.67 17.4,13.8L19.2,11.4C17.19,9.89 14.7,9 12,9Z" /></svg>');
+        }
+        
+        .icon.warning {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F44336"><path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z" /></svg>');
+        }
+        
+        #playVoiceBtn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            display: none;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        #playVoiceBtn:hover {
+            background: #388E3C;
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .tutor-container {
+                flex-direction: column;
+            }
+            
+            .character-container, .q-and-a {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .character {
+                margin: 0 auto;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="three-container"></div>
+        <div class="content">
+            <header>
+                <h1>Cyber Safety Buddy</h1>
+                <p class="subtitle">Learning online safety is super fun!</p>
+            </header>
+            
+            <div class="tutor-container">
+                <div class="character-container">
+                    <div class="character">
+                        <div class="character-head">
+                            <div class="character-face">
+                                <div class="character-eye left">
+                                    <div class="character-pupil"></div>
+                                </div>
+                                <div class="character-eye right">
+                                    <div class="character-pupil"></div>
+                                </div>
+                                <div class="character-glasses">
+                                    <div class="character-glasses-lens left"></div>
+                                    <div class="character-glasses-bridge"></div>
+                                    <div class="character-glasses-lens right"></div>
+                                </div>
+                                <div class="character-mouth">
+                                    <div class="character-tongue"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="character-body"></div>
+                        <div class="character-arm left"></div>
+                        <div class="character-arm right"></div>
+                    </div>
+                    <div class="speech-bubble">
+                        Hi there! I'm Pixel, your Cyber Safety Buddy! Click on any question card to learn about staying safe online!
+                    </div>
+                    <button id="playVoiceBtn">🔊 Hear Me Speak!</button>
+                </div>
+                
+                <div class="q-and-a">
+                    <div class="flashcard">
+                        <p class="question">What should I do if someone I don't know messages me online?</p>
+                        <div class="answer">
+                            Never reply to messages from strangers online! Tell a trusted adult like your parents or teacher right away. Remember: Online strangers might not be who they say they are.
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard">
+                        <p class="question">Is it okay to share my password with my best friend?</p>
+                        <div class="answer">
+                            No way! Keep your passwords super secret - don't share them with anyone, not even your best friends! Your passwords are like the keys to your online home. Keep them safe!
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard">
+                        <p class="question">What personal information should I never share online?</p>
+                        <div class="answer">
+                            Never share your full name, home address, phone number, school name, passwords, or pictures without your parents' permission. These are your private details that should stay private!
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard">
+                        <p class="question">What should I do if I see something scary or confusing online?</p>
+                        <div class="answer">
+                            If you see something that makes you feel uncomfortable, scared, or confused - stop looking right away and tell a grown-up you trust. It's always better to ask for help!
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard">
+                        <p class="question">How do I know if a website is safe to visit?</p>
+                        <div class="answer">
+                            Look for the padlock symbol in the address bar, check that the website address starts with "https://", and always ask a grown-up before visiting new websites. Safe websites protect your information!
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard">
+                        <p class="question">What is cyberbullying and what should I do if it happens?</p>
+                        <div class="answer">
+                            Cyberbullying is when someone is mean or unkind to you online. If this happens, don't respond to the bully. Save the evidence, block the person, and tell a trusted adult right away. Remember: It's never your fault if you're bullied!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                © 2025 Cyber Safety Buddy | Made with ❤️ for kids
+            </footer>
+        </div>
+        
+        <div class="floating-icons"></div>
+    </div>
+
+    <script>
+        // Initialize Three.js scene
+        const threeContainer = document.getElementById('three-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        threeContainer.appendChild(renderer.domElement);
+        
+        camera.position.z = 5;
+        
+        // Create floating bubbles
+        const bubbles = [];
+        const bubbleCount = 20;
+        
+        function createBubble() {
+            const geometry = new THREE.SphereGeometry(Math.random() * 0.5 + 0.1, 16, 16);
+            const material = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(
+                    Math.random() * 0.3 + 0.7,
+                    Math.random() * 0.3 + 0.7,
+                    Math.random() * 0.3 + 0.7
+                ),
+                transparent: true,
+                opacity: Math.random() * 0.4 + 0.1
+            });
+            
+            const bubble = new THREE.Mesh(geometry, material);
+            
+            bubble.position.x = Math.random() * 20 - 10;
+            bubble.position.y = Math.random() * 20 - 10;
+            bubble.position.z = Math.random() * 10 - 15;
+            
+            bubble.userData = {
+                speedX: Math.random() * 0.01 - 0.005,
+                speedY: Math.random() * 0.01 - 0.005,
+                speedZ: Math.random() * 0.01
+            };
+            
+            scene.add(bubble);
+            bubbles.push(bubble);
+        }
+        
+        for (let i = 0; i < bubbleCount; i++) {
+            createBubble();
+        }
+        
+        // Create animated character elements
+        const leftEye = document.querySelector('.character-eye.left');
+        const rightEye = document.querySelector('.character-eye.right');
+        const leftPupil = document.querySelector('.character-eye.left .character-pupil');
+        const rightPupil = document.querySelector('.character-eye.right .character-pupil');
+        const mouth = document.querySelector('.character-mouth');
+        const speechBubble = document.querySelector('.speech-bubble');
+        const playVoiceBtn = document.getElementById('playVoiceBtn');
+        
+        // Animation functions
+        function animateCharacter() {
+            // Blinking animation
+            const blinkTimeline = gsap.timeline({repeat: -1, repeatDelay: 3});
+            blinkTimeline.to([leftEye, rightEye], {height: 5, duration: 0.1});
+            blinkTimeline.to([leftEye, rightEye], {height: 40, duration: 0.1});
+            
+            // Bouncing animation
+            gsap.to('.character', {
+                y: -10, 
+                duration: 1.5, 
+                repeat: -1, 
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+            
+            // Breathing animation for body
+            gsap.to('.character-body', {
+                scaleX: 1.05, 
+                scaleY: 1.05, 
+                duration: 2, 
+                repeat: -1, 
+                yoyo: true,
+                ease: "power1.inOut",
+                transformOrigin: "center center"
+            });
+            
+            // Arm waving
+            gsap.to('.character-arm.right', {
+                rotation: 15, 
+                duration: 1, 
+                repeat: -1, 
+                yoyo: true,
+                ease: "power1.inOut",
+                transformOrigin: "top center"
+            });
+        }
+        
+        function lookAt(event) {
+            const mouseX = event.clientX / window.innerWidth;
+            const mouseY = event.clientY / window.innerHeight;
+            
+            // Calculate pupil position
+            const maxMoveX = 10;
+            const maxMoveY = 8;
+            
+            const leftNewX = 7 + maxMoveX * (mouseX - 0.5) * 2;
+            const rightNewX = 7 + maxMoveX * (mouseX - 0.5) * 2;
+            const topNewY = 10 + maxMoveY * (mouseY - 0.5) * 2;
+            
+            gsap.to(leftPupil, {left: leftNewX, top: topNewY, duration: 0.3});
+            gsap.to(rightPupil, {left: rightNewX, top: topNewY, duration: 0.3});
+        }
+        
+        function createFloatingIcons() {
+            const iconTypes = ['computer', 'lock', 'shield', 'wifi', 'warning'];
+            const iconContainer = document.querySelector('.floating-icons');
+            
+            for (let i = 0; i < 15; i++) {
+                const icon = document.createElement('div');
+                icon.classList.add('icon');
+                icon.classList.add(iconTypes[Math.floor(Math.random() * iconTypes.length)]);
+                
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const scale = Math.random() * 0.5 + 0.5;
+                const rotation = Math.random() * 360;
+                
+                icon.style.left = `${posX}px`;
+                icon.style.top = `${posY}px`;
+                icon.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+                icon.style.opacity = Math.random() * 0.5 + 0.2;
+                
+                iconContainer.appendChild(icon);
+                
+                gsap.to(icon, {
+                    y: `-=${Math.random() * 100 + 50}`,
+                    x: `+=${Math.random() * 40 - 20}`,
+                    rotation: `+=${Math.random() * 180 - 90}`,
+                    duration: Math.random() * 10 + 10,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut"
+                });
+            }
+        }
+        
+        // Text to speech function
+        function speakText(text) {
+            // Check if browser supports the Web Speech API
+            if ('speechSynthesis' in window) {
+                const speech = new SpeechSynthesisUtterance();
+                speech.text = text;
+                speech.volume = 1;
+                speech.rate = 1;
+                speech.pitch = 1;
+                
+                // Use a child-like voice if available
+                const voices = window.speechSynthesis.getVoices();
+                for (let i = 0; i < voices.length; i++) {
+                    if (voices[i].name.includes('Female') || voices[i].name.includes('girl')) {
+                        speech.voice = voices[i];
+                        break;
+                    }
+                }
+                
+                window.speechSynthesis.speak(speech);
+                
+                // Animate mouth while speaking
+                const mouthInterval = setInterval(() => {
+                    mouth.style.height = Math.random() * 20 + 20 + 'px';
+                }, 100);
+                
+                speech.onend = function() {
+                    clearInterval(mouthInterval);
+                    mouth.style.height = '35px';
+                };
+            }
+        }
+        
+        // Handle flashcard clicks
+        const flashcards = document.querySelectorAll('.flashcard');
+        flashcards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Toggle active class for clicked card
+                const wasActive = this.classList.contains('active');
+                
+                // Close all cards
+                flashcards.forEach(c => c.classList.remove('active'));
+                
+                // If the card wasn't active before, open it
+                if (!wasActive) {
+                    this.classList.add('active');
+                    
+                    // Update speech bubble
+                    const question = this.querySelector('.question').textContent;
+                    const answer = this.querySelector('.answer').textContent;
+                    speechBubble.textContent = "Great question! " + answer;
+                    speechBubble.classList.add('show');
+                    
+                    // Show speech button
+                    playVoiceBtn.style.display = 'inline-block';
+                    playVoiceBtn.onclick = function() {
+                        speakText(answer);
+                    };
+                    
+                    // Animate character excitement
+                    gsap.to('.character-head', {
+                        rotation: 10,
+                        duration: 0.2,
+                        yoyo: true,
+                        repeat: 3
+                    });
+                } else {
+                    // Hide speech button if closing card
+                    playVoiceBtn.style.display = 'none';
+                    speechBubble.classList.remove('show');
+                }
+            });
+        });
+        
+        // Animate scene
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Animate bubbles
+            bubbles.forEach(bubble => {
+                bubble.position.x += bubble.userData.speedX;
+                bubble.position.y += bubble.userData.speedY;
+                bubble.position.z += bubble.userData.speedZ;
+                
+                bubble.rotation.x += 0.01;
+                bubble.rotation.y += 0.01;
+                
+                // Reset bubble position if it goes too far
+                if (bubble.position.z > 5) {
+                    bubble.position.z = -15;
+                    bubble.position.x = Math.random() * 20 - 10;
+                    bubble.position.y = Math.random() * 20 - 10;
+                }
+            });
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Handle window resize
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        // Initialize everything
+        window.addEventListener('resize', onWindowResize);
+        window.addEventListener('mousemove', lookAt);
+        
+        // Show introduction
+        setTimeout(() => {
+            speechBubble.classList.add('show');
+        }, 500);
+        
+        // Start animations
+        animateCharacter();
+        createFloatingIcons();
+        animate();
+    </script>
+</body>
+</html>
