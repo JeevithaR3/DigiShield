@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Support Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="support.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="alerts.html" >Alerts</a>
+            <a href="flagged.html">Flagged</a>
+            <a href="settings.html">Settings</a>
+        </div>
+    </nav>
+    <aside class="dashboard-sidebar">
+        <a href="overview.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-house sidebar-icon"></i>
+            </div>
+            Overview
+        </a>
+        <a href="scan_img.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
+            </div>
+            Upload Scan
+        </a>
+        <a href="alert_history.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
+            </div>
+            Alert History
+        </a>
+        <a href="support.html" class="active">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-comments sidebar-icon"></i>
+            </div>
+            Support
+        </a>
+    </aside>
+    <main class="support-container">
+        <header class="page-header">
+            <h1 class="page-title">Support Center</h1>
+            <p class="page-subtitle">How can we help you today?</p>
+        </header>
+
+        <section class="support-grid">
+            <div class="faq-section support-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="fas fa-question-circle"></i></div>
+                    <div class="section-title">FAQs</div>
+                </div>
+                <p>Find quick answers to common questions about our services.</p>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What is DigiShield?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>DigiShield is our advanced security solution designed to protect your digital assets from cyber threats. It offers real-time monitoring, threat detection, and proactive defense mechanisms to ensure the integrity and confidentiality of your data.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How do I reset my password?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>To reset your password, navigate to the login page and click on "Forgot Password." Follow the instructions to enter your registered email address, and a password reset link will be sent to you.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What payment methods do you accept?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We accept various payment methods, including major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers. For specific details on payment options, please refer to our billing section.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How can I contact customer support?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You can contact our customer support team via the contact form on this page, or by calling us directly at [Your Phone Number]. Our support hours are Monday to Friday, 9 AM to 5 PM IST.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="support-section">
+                <div class="section-header">
+                    <div class="section-icon">📞</div>
+                    <h2 class="section-title">Contact Support</h2>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Name</label>
+                        <input class="form-input" type="text" id="name" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input class="form-input" type="email" id="email" placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="message">Message</label>
+                        <textarea class="form-textarea" id="message" placeholder="Type your message..."></textarea>
+                    </div>
+                    <button class="submit-btn" type="submit">Send Message</button>
+                </form>
+            </div>
+
+            <div class="support-section emergency-contact-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="section-title">Emergency Contact</div>
+                </div>
+                <p>For critical security incidents or immediate threats, please use our emergency line.</p>
+                <p><strong>Available 24/7</strong></p>
+                <a href="tel:+1234567890">
+                    <i class="fas fa-phone-alt"></i> Call Emergency Support
+                </a>
+            </div>
+
+        </section>
+        <script>
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', () => {
+                    // Toggle the active class on the faq-item container
+                    const faqItem = button.parentElement;
+                    faqItem.classList.toggle('active');
+
+                    // Toggle the arrow direction
+                    const arrow = button.querySelector('i');
+                    if (faqItem.classList.contains('active')) {
+                        // Using Font Awesome class for consistency
+                        arrow.classList.remove('fa-chevron-down');
+                        arrow.classList.add('fa-chevron-up');
+                    } else {
+                        arrow.classList.remove('fa-chevron-up');
+                        arrow.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>
