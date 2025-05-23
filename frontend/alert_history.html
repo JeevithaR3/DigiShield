@@ -3,18 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>Alert History | DigiShield</title>
-  <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="alert_history.css">
 </head>
 <body>
   <nav class="navbar">
     <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
     <div class="nav-links">
       <a href="dashboard.html">Dashboard</a>
-      <a href="alerts.html" class="active">Alerts</a>
+      <a href="alerts.html" >Alerts</a>
       <a href="flagged.html">Flagged</a>
       <a href="settings.html">Settings</a>
     </div>
   </nav>
+  <aside class="dashboard-sidebar">
+        <a href="overview.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-house sidebar-icon"></i>
+            </div>
+            Overview
+        </a>
+        <a href="scan_img.html" >
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
+            </div>
+            Upload Scan
+        </a>
+        <a href="alert_history.html" class="active">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
+            </div>
+            Alert History
+        </a>
+        <a href="support.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-comments sidebar-icon"></i>
+            </div>
+            Support
+        </a>
+    </aside>
   <div class="alerts-main">
     <div class="alerts-content">
       <h2>Alert History</h2>
@@ -37,5 +64,9 @@
       </div>
     </div>
   </div>
+
+  <footer>
+    <p>DigiShield &copy; 2025. Protecting Children Online</p>
+  </footer>
 </body>
 </html>

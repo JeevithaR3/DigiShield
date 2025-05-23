@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flagged Messages - DigiShield</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="flagged.css">
 </head>
 <body>
     <nav class="navbar">
@@ -18,14 +18,36 @@
         </div>
     </nav>
     <aside class="dashboard-sidebar">
-        <a href="overview.html"><i class="fa-solid fa-house fa-lg sidebar-icon"></i>Overview</a>
-        <a href="upload.html"><i class="fa-solid fa-cloud-arrow-up fa-lg sidebar-icon"></i>Upload Scan</a>
-        <a href="history.html"><i class="fa-solid fa-clock-rotate-left fa-lg sidebar-icon"></i>Alert History</a>
-        <a href="support.html"><i class="fa-solid fa-comments fa-lg sidebar-icon"></i>Support</a>
+        <a href="overview.html" >
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-house sidebar-icon"></i>
+            </div>
+            Overview
+        </a>
+        <a href="scan_img.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
+            </div>
+            Upload Scan
+        </a>
+        <a href="alert_history.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
+            </div>
+            Alert History
+        </a>
+        <a href="support.html">
+            <div class="sidebar-icon-container">
+                <i class="fa-solid fa-comments sidebar-icon"></i>
+            </div>
+            Support
+        </a>
     </aside>
     <main class="main-content">
         <h2>Flagged Messages</h2>
+        <br>
         <div class="flagged-list">
+            <!-- Example flagged messages -->
             <div class="flagged-card">
                 <div class="flagged-meta">
                     <span class="flagged-user">👤 JohnDoe123</span>
@@ -39,6 +61,7 @@
                     <button class="danger-btn small">Report</button>
                 </div>
             </div>
+            <br><br>
             <div class="flagged-card">
                 <div class="flagged-meta">
                     <span class="flagged-user">👤 CoolKid99</span>
