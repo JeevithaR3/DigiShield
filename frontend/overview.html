@@ -87,28 +87,37 @@
         window.scrollTo({top: 0, behavior: 'smooth'});
       };
     </script>
-<script>
-    async function fetchRiskMessages() {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/api/messages');
-        const data = await response.json();
-      
-        const list = document.getElementById('risk-messages-list');
-        list.innerHTML = ''; // Clear existing items
+    <script>
+async function fetchRiskMessages() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/api/messages');
+    const data = await response.json();
 
-        data.forEach(msg => {
-        const li = document.createElement('li');
-        li.innerHTML = `🚨 <strong>${msg.text || 'Unknown User'}</strong>: ${msg.website}`;
-        list.appendChild(li);
-      });
-    } catch (error) {
-      console.error('Error fetching risk messages:', error);
-    }
+    const list = document.getElementById('risk-messages-list');
+    list.innerHTML = '';
+
+    data.forEach(msg => {
+      // Remove URLs and any "Risk Score: ... Time: ..." from the message text
+      let cleanText = (msg.text || 'No message')
+        .replace(/https?:\/\/\S+|file:\/\/\/\S+/gi, '')
+        .replace(/Risk Score:.*Time:.*$/gi, '')
+        .replace(/[\.:]\s*$/, '')
+        .trim();
+
+      const li = document.createElement('li');
+      li.innerHTML = `
+        🚨 <strong>${cleanText}</strong><br>
+        <span style="color:#b39ddb;">Risk Score:</span> ${msg.risk_score ?? 'N/A'}
+        <span style="color:#b39ddb;margin-left:16px;">Time:</span> ${msg.timestamp ? new Date(msg.timestamp).toLocaleString() : 'N/A'}
+      `;
+      list.appendChild(li);
+    });
+  } catch (error) {
+    console.error('Error fetching risk messages:', error);
   }
+}
 
-  // Call the function when the page loads
-  window.onload = fetchRiskMessages;
+window.onload = fetchRiskMessages;
 </script>
-
 </body>
 </html>
