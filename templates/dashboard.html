@@ -1,0 +1,40 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>AI Defender Dashboard</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h2>AI Defender - Logged Toxic Messages</h2>
+    <table>
+        <tr>
+            <th>Website</th>
+            <th>Time (UTC)</th>
+            <th>Message</th>
+            <th>Label</th>
+            <th>Risk Score</th>
+            <th>Multi-Labels</th>
+        </tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.website }}</td>
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.message }}</td>
+            <td>{{ log.label }}</td>
+            <td>{{ log.risk_score }}</td>
+            <td>
+                {% for k, v in log.multi_labels.items() %}
+                    {{ k }}: {{ v }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html> {% endcomment %}

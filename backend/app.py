@@ -1,125 +1,220 @@
+# from flask import Flask, request, jsonify
+# from flask_cors import CORS
+# from transformers import pipeline
+# from datetime import datetime
+# from pymongo import MongoClient
+
+# app = Flask(__name__)
+# CORS(app, resources={r"/*": {"origins": "*"}})  # Fix CORS issues
+
+# # Connect to MongoDB (adjust DB URI as needed)
+# client = MongoClient("mongodb://localhost:27017/")
+# db = client["ai_defender"]
+# collection = db["toxic_messages"]
+
+# # Load Models
+# bert_model = pipeline("text-classification", model="unitary/toxic-bert", top_k=None)
+# roberta_model = pipeline("text-classification", model="SkolkovoInstitute/roberta_toxicity_classifier", top_k=None)
+
+# # Labels to check from RoBERTa model
+# roberta_labels = [
+#     "toxic", "severe_toxicity", "obscene",
+#     "identity_attack", "insult", "threat", "sexual_explicit"
+# ]
+
+# # Analyze single message
+# def analyze_text(text):
+#     # BERT prediction
+#     bert_output = bert_model(text)[0]
+#     bert_score = max(bert_output, key=lambda x: x['score'])
+
+#     # RoBERTa prediction
+#     roberta_output = roberta_model(text)[0]
+#     roberta_result = {label['label']: label['score'] for label in roberta_output}
+
+#     # Decide if toxic (multi-check)
+#     toxic = False
+#     if bert_score['label'].lower() == "toxic" and bert_score['score'] > 0.75:
+#         toxic = True
+#     elif any(roberta_result.get(label, 0) >= 0.5 for label in roberta_labels):
+#         toxic = True
+
+#     return {
+#         "text": text,
+#         "label": "toxic" if toxic else "non-toxic",
+#         "risk_score": int(bert_score['score'] * 100),
+#         "multi_labels": roberta_result
+#     }
+
+# @app.route("/")
+# def home():
+#     return "AI Defender is running."
+
+# @app.route("/analyze_batch", methods=["POST"])
+# def analyze_batch():
+#     try:
+#         data = request.get_json()
+#         texts = data.get("texts", [])
+#         url = data.get("url", "unknown")
+
+#         if not isinstance(texts, list) or not texts:
+#             return jsonify({"error": "Invalid or missing 'texts' list"}), 400
+
+#         results = []
+#         for text in texts:
+#             result = analyze_text(text)
+#             results.append(result)
+
+#             if result["label"] == "toxic":
+#                 collection.insert_one({
+#                     "message": text,
+#                     "label": result["label"],
+#                     "risk_score": result["risk_score"],
+#                     "multi_labels": result["multi_labels"],
+#                     "website": url,
+#                     "timestamp": datetime.utcnow()
+#                 })
+
+#         return jsonify(results)
+
+#     except Exception as e:
+#         print(f"Error in /analyze_batch: {e}")
+#         return jsonify({"error": str(e)}), 500
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
-import torch
-from pymongo import MongoClient
+from transformers import pipeline
 from datetime import datetime
-from urllib.parse import urlparse
+from pymongo import MongoClient
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS globally
 
-# MongoDB setup
-mongo_client = MongoClient("mongodb://localhost:27017/")  # Update URI if needed
-db = mongo_client["aidefender_db"]
-collection = db["toxic_logs"]
+# --- CORS ----------------------------------------------------
+CORS(app, resources={r"/*": {"origins": "*"}})   # allow extension / file:// pages
 
-# Load the Toxic BERT model
-toxic_classifier = pipeline("text-classification", model="unitary/toxic-bert")
+# --- MongoDB -------------------------------------------------
+client = MongoClient("mongodb://localhost:27017/")
+db = client["ai_defender"]
+collection = db["toxic_messages"]
 
-# Load the Skolkovo Institute multi-label classifier
-multi_model_name = "SkolkovoInstitute/roberta_toxicity_classifier"
-multi_tokenizer = AutoTokenizer.from_pretrained(multi_model_name)
-multi_model = AutoModelForSequenceClassification.from_pretrained(multi_model_name)
-multi_model.eval()
+# --- Models --------------------------------------------------
+bert_model    = pipeline("text-classification",
+                         model="unitary/toxic-bert",
+                         top_k=None)
+roberta_model = pipeline("text-classification",
+                         model="SkolkovoInstitute/roberta_toxicity_classifier",
+                         top_k=None)
 
-LABELS = ['toxicity', 'severe_toxicity', 'obscene', 'identity_attack', 'insult', 'threat', 'sexual_explicit']
+ROBERTA_LABELS = [
+    "toxic", "severe_toxicity", "obscene",
+    "identity_attack", "insult", "threat", "sexual_explicit"
+]
 
-def classify_multilabel(text):
-    inputs = multi_tokenizer(text, return_tensors="pt", truncation=True, padding=True)
-    with torch.no_grad():
-        outputs = multi_model(**inputs)
-    scores = torch.sigmoid(outputs.logits).squeeze().tolist()
-    return dict(zip(LABELS, [round(s, 3) for s in scores]))
+# --- Helper --------------------------------------------------
+def analyze_text(text: str) -> dict:
+    """Return toxicity analysis for a single sentence."""
+    # BERT (binary)
+    bert_output = bert_model(text)[0]           # list of dicts
+    bert_top    = max(bert_output, key=lambda x: x["score"])
 
-@app.route('/analyze_batch', methods=['POST'])
+    # RoBERTa (multi-label)
+    rob_output  = roberta_model(text)[0]        # list of dicts
+    rob_scores  = {d["label"]: d["score"] for d in rob_output}
+
+    # ── Toxicity logic ───────────────────────────────────────
+    toxic = False
+
+    # 1) BERT: label == toxic & score > 0.65
+    if bert_top["label"].lower() == "toxic" and bert_top["score"] > 0.65:
+        toxic = True
+    # 2) Any RoBERTa key above 0.50
+    elif any(rob_scores.get(lbl, 0) >= 0.50 for lbl in ROBERTA_LABELS):
+        toxic = True
+    # 3) Fallback phrase match
+    threat_phrases = [
+        "i'm going to hurt you", "i will hurt you", "hurt you",
+        "kill you", "i will kill", "you will die",
+        "i’ll beat you", "i will beat"
+    ]
+    if any(p in text.lower() for p in threat_phrases):
+        toxic = True
+
+    return {
+        "text": text,
+        "label": "toxic" if toxic else "non-toxic",
+        "risk_score": int(bert_top["score"] * 100),
+        "multi_labels": {k: round(v, 3) for k, v in rob_scores.items()},
+        "bert_label": bert_top["label"],
+        "bert_raw": round(bert_top["score"], 4)
+    }
+
+# --- Routes --------------------------------------------------
+@app.route("/")
+def home():
+    return "🛡️ AI Defender backend is running."
+
+@app.route("/analyze_batch", methods=["POST"])
 def analyze_batch():
-    data = request.get_json()
-    texts = data.get("texts", [])
-    url = data.get("url", "")  # new: get current page URL from frontend
+    try:
+        data  = request.get_json(force=True)
+        texts = data.get("texts", [])
+        url   = data.get("url", "unknown")
 
-    if not texts:
-        return jsonify([])
+        if not isinstance(texts, list) or not texts:
+            return jsonify({"error": "Invalid or missing 'texts' list"}), 400
 
-    results = []
-    for text in texts:
-        toxic_result = toxic_classifier(text)[0]
-        multilabels = classify_multilabel(text)
-        risk_score = int(toxic_result["score"] * 100)
+        results = []
+        for sentence in texts:
+            res = analyze_text(sentence)
+            results.append(res)
 
-        results.append({
-            "text": text,
-            "label": toxic_result["label"],
-            "risk_score": risk_score,
-            "multi_labels": multilabels
-        })
+            # store only toxic ones
+            if res["label"] == "toxic":
+                collection.insert_one({
+                    "website": url,
+                    "timestamp": datetime.utcnow(),
+                    **res      # expands text, label, risk_score, multi_labels, bert_* fields
+                })
 
-        # Log to MongoDB only if toxic or multi-label score >= 0.5
-        if toxic_result["label"].lower() == "toxic" or any(score >= 0.5 for score in multilabels.values()):
-            website = ""
-            if url:
-                try:
-                    website = urlparse(url).netloc
-                except:
-                    website = url
+        return jsonify(results)
 
-            collection.insert_one({
-                "website": website,
-                "timestamp": datetime.utcnow(),
-                "text": text,
-                "label": toxic_result["label"],
-                "risk_score": risk_score,
-                "multi_labels": multilabels
+    except Exception as exc:
+        print(f"[ERROR] /analyze_batch → {exc}")
+        return jsonify({"error": str(exc)}), 500
+    
+@app.route("/api/messages", methods=["GET"])
+def get_toxic_messages():
+    """
+    Fetch all toxic messages stored in MongoDB and return as JSON list.
+    """
+    try:
+        # Find all toxic messages, sort by newest first
+        toxic_msgs_cursor = collection.find().sort("timestamp", -1)
+
+        messages = []
+        for msg in toxic_msgs_cursor:
+            messages.append({
+                "text": msg.get("text"),
+                "website": msg.get("website", "unknown"),
+                "timestamp": msg.get("timestamp").isoformat() if msg.get("timestamp") else None,
+                "risk_score": msg.get("risk_score"),
+                "multi_labels": msg.get("multi_labels"),
+                "bert_label": msg.get("bert_label"),
+                "bert_raw": msg.get("bert_raw"),
+                # Add other fields you want to send to frontend here
             })
 
-    return jsonify(results)
+        return jsonify(messages)
+
+    except Exception as exc:
+        print(f"[ERROR] /api/messages → {exc}")
+        return jsonify({"error": str(exc)}), 500
 
 
-@app.route('/dashboard', methods=['GET'])
-def dashboard():
-    logs = list(collection.find().sort("timestamp", -1))
-
-    html = """
-    <html>
-    <head>
-        <title>AI Defender Parent Dashboard</title>
-        <style>
-            table {border-collapse: collapse; width: 100%;}
-            th, td {border: 1px solid #ccc; padding: 8px; text-align: left;}
-            th {background-color: #f2f2f2;}
-        </style>
-    </head>
-    <body>
-        <h2>AI Defender - Toxic Content Logs</h2>
-        <table>
-            <tr>
-                <th>Website</th>
-                <th>Timestamp (UTC)</th>
-                <th>Content</th>
-                <th>Label</th>
-                <th>Risk Score</th>
-            </tr>
-    """
-
-    for entry in logs:
-        html += f"""
-        <tr>
-            <td>{entry.get('website', '')}</td>
-            <td>{entry.get('timestamp').strftime('%Y-%m-%d %H:%M:%S')}</td>
-            <td>{entry.get('text')}</td>
-            <td>{entry.get('label')}</td>
-            <td>{entry.get('risk_score')}</td>
-        </tr>
-        """
-
-    html += """
-        </table>
-    </body>
-    </html>
-    """
-    return html
-
-
-if __name__ == '__main__':
-    print("Flask server running at http://127.0.0.1:5000")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+# ------------------------------------------------------------
+if __name__ == "__main__":
+    print("🚀  AI Defender backend running at http://127.0.0.1:5000")
+    app.run(debug=True)
