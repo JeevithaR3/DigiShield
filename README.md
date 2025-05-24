@@ -69,8 +69,6 @@ AI Models: Hugging Face 🤗 Transformers
 
 📱 Mobile app for instant risk notifications
 
-📉 Child behavior analytics dashboard
-
 🎯 Vision
 “Protect every child online by giving parents the superpower of AI — to see what matters, when it matters.”
 
