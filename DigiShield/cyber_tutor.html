@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐧 Cyber Safety Captain Penguin! 🐧</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, 
+                rgba(13, 20, 56, 0.95) 0%, 
+                rgba(15, 25, 45, 0.95) 25%, 
+                rgba(20, 30, 60, 0.95) 50%, 
+                rgba(25, 35, 65, 0.95) 75%, 
+                rgba(13, 20, 56, 0.95) 100%);
+            font-family: 'Fredoka', cursive, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            background: rgba(25, 35, 65, 0.4) !important;
+            border: 2px solid rgba(100, 200, 255, 0.3) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+            border-radius: 30px;
+             max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Decorative elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .floating-star {
+            position: absolute;
+            color: #FFD700;
+            font-size: 1.5rem;
+            animation: float-star 4s ease-in-out infinite;
+        }
+
+        .floating-shield {
+            position: absolute;
+            color: #64C8FF;
+            font-size: 2rem;
+            animation: float-shield 5s ease-in-out infinite;
+        }
+
+        /* Title styling */
+        .title-gradient {
+            background: linear-gradient(135deg, #64C8FF, #FF69B4, #FFD700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Fredoka', cursive;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(100, 200, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .sweet-message {
+            color: #FFD700;
+            font-family: 'Fredoka', cursive;
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .sweet-message-2 {
+            color: #FF69B4;
+            font-family: 'Fredoka', cursive;
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Score board styling */
+        .score-board-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-board {
+            background: rgba(25, 35, 65, 0.6);
+            padding: 1.5rem 2rem;
+            border-radius: 25px;
+            border: 2px solid rgba(100, 200, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            min-width: 250px;
+        }
+
+        .score {
+            font-size: 2rem;
+            color: #FFD700;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Questions grid */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .question-card-big {
+            background: rgba(25, 35, 65, 0.6);
+            padding: 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(100, 200, 255, 0.3);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .question-card-big:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(100, 200, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(100, 200, 255, 0.4);
+            background: rgba(25, 35, 65, 0.8);
+        }
+
+        .question-icon-big {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .question-text-big {
+            font-size: 1.2rem;
+            color: #FFFFFF;
+            font-family: 'Fredoka', cursive;
+            font-weight: 500;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            line-height: 1.4;
+        }
+
+        /* Penguin character */
+        .tutor-container {
+            position: fixed;
+            top: 180px;
+            right: 30px;
+            z-index: 15;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .penguin-captain {
+            width: 140px;
+            height: 200px;
+            position: relative;
+        }
+
+        .penguin-head {
+            width: 100px;
+            height: 90px;
+            background: #333;
+            border-radius: 80% 80% 80% 80%;
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .penguin-body {
+            width: 120px;
+            height: 130px;
+            background: #333;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+        }
+
+        .penguin-body:after {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 110px;
+            background: white;
+            border-radius: 50%;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .captain-hat {
+            width: 110px;
+            height: 35px;
+            background: #0b5394;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px 10px 0 0;
+            z-index: 1;
+        }
+
+        .captain-hat:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: gold;
+            border-radius: 50%;
+            top: 7px;
+            left: 45px;
+            box-shadow: 0 0 15px gold;
+        }
+
+        .penguin-wings {
+            position: absolute;
+            width: 25px;
+            height: 80px;
+            background: #333;
+            bottom: 25px;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        .penguin-wings:before {
+            content: "";
+            position: absolute;
+            left: 95px;
+            width: 25px;
+            height: 80px;
+            background: #333;
+            border-radius: 50%;
+        }
+
+        .captain-badge {
+            width: 25px;
+            height: 25px;
+            background: gold;
+            position: absolute;
+            border-radius: 50%;
+            bottom: 40px;
+            left: 47px;
+            z-index: 4;
+            box-shadow: 0 0 10px gold;
+        }
+
+        .eye {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 35px;
+            z-index: 3;
+        }
+
+        .left-eye {
+            left: 23px;
+        }
+
+        .right-eye {
+            right: 23px;
+        }
+
+        .eyeball {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #111;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+        }
+
+        .penguin-beak {
+            position: absolute;
+            width: 30px;
+            height: 12px;
+            background: #f59e0b;
+            border-radius: 40% 40% 60% 60%;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .penguin-mouth {
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            border: 2px solid #111;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            bottom: 13px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            transition: all 0.3s ease;
+        }
+
+        .speaking {
+            height: 10px;
+            animation: talk 0.3s ease-in-out infinite alternate;
+        }
+
+        /* AI Chat */
+        .ai-chat {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 350px;
+            background: rgba(25, 35, 65, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(100, 200, 255, 0.3);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .ai-chat.minimized {
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .ai-header {
+            background: linear-gradient(135deg, #64C8FF, #FF69B4);
+            color: white;
+            padding: 15px;
+            border-radius: 20px 20px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+        }
+
+        .ai-messages {
+            height: 200px;
+            overflow-y: auto;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ai-input-container {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(100, 200, 255, 0.3);
+            border-radius: 20px;
+            outline: none;
+            background: rgba(255,255,255,0.9);
+            font-family: 'Fredoka', cursive;
+        }
+
+        .ai-send {
+            background: linear-gradient(135deg, #64C8FF, #FF69B4);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .ai-send:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(100, 200, 255, 0.4);
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: 'Fredoka', cursive;
+            animation: messageSlide 0.3s ease;
+        }
+
+        .user-message {
+            background: rgba(100, 200, 255, 0.3);
+            color: white;
+            margin-left: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ai-message {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            margin-right: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Modals */
+        .answer-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .answer-card {
+            background: rgba(25, 35, 65, 0.9);
+            padding: 40px;
+            border-radius: 25px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 3px solid rgba(100, 200, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff6b6b;
+            transition: transform 0.2s ease;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+            background: rgba(255,255,255,0.3);
+        }
+
+        .answer-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #fff;
+            margin-bottom: 20px;
+            font-family: 'Fredoka', cursive;
+            font-weight: 400;
+        }
+
+        .speak-btn {
+            background: linear-gradient(135deg, #64C8FF, #FF69B4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(100, 200, 255, 0.4);
+        }
+
+        .speak-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(100, 200, 255, 0.6);
+        }
+
+        /* Celebration */
+        .celebration-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .celebration-content {
+            text-align: center;
+            background: rgba(25, 35, 65, 0.9);
+            padding: 50px;
+            border-radius: 30px;
+            border: 5px solid rgba(100, 200, 255, 0.6);
+            box-shadow: 0 20px 60px rgba(100, 200, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .celebration-title {
+            font-size: 3.5rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-family: 'Fredoka', cursive;
+            font-weight: 700;
+            text-shadow: 0 4px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        .celebration-message {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-family: 'Fredoka', cursive;
+            font-weight: 400;
+        }
+
+        .celebration-btn {
+            background: linear-gradient(135deg, #64C8FF, #FF69B4);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(100, 200, 255, 0.4);
+        }
+
+        .celebration-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(100, 200, 255, 0.6);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        /* API Key Modal */
+        .api-key-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .api-key-card {
+            background: rgba(25, 35, 65, 0.9);
+            padding: 40px;
+            border-radius: 25px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 3px solid rgba(100, 200, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .api-key-card h3 {
+            color: #FFD700;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .api-key-card p {
+            color: #FFFFFF;
+            font-family: 'Fredoka', cursive;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .api-key-input {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid rgba(100, 200, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+            outline: none;
+            font-family: 'Fredoka', cursive;
+        }
+
+        .api-key-input:focus {
+            border-color: rgba(100, 200, 255, 0.6);
+            box-shadow: 0 0 15px rgba(100, 200, 255, 0.3);
+        }
+
+        .api-key-save {
+            background: linear-gradient(135deg, #64C8FF, #FF69B4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Fredoka', cursive;
+            font-weight: 600;
+        }
+
+        .api-key-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(100, 200, 255, 0.4);
+        }
+
+        .api-key-card small {
+            color: #64C8FF;
+            font-family: 'Fredoka', cursive;
+        }
+
+        .api-key-card small a {
+            color: #FF69B4;
+            text-decoration: none;
+        }
+
+        .api-key-card small a:hover {
+            text-decoration: underline;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #64C8FF, #FF69B4, #FFD700);
+            transition: width 0.3s ease;
+            z-index: 1000;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 0 15px rgba(100, 200, 255, 0.5);
+        }
+
+        /* Custom cursor */
+        #custom-cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #64C8FF, #FF69B4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.7);
+        }
+
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes float-star {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes float-shield {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(-15px) rotate(10deg); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px rgba(100, 200, 255, 0.5); }
+            100% { text-shadow: 0 0 30px rgba(100, 200, 255, 0.8), 0 0 40px rgba(255, 105, 180, 0.4); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes talk {
+            from { height: 3px; }
+            to { height: 10px; }
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes messageSlide {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .questions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .questions-grid {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+            }
+
+            .tutor-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                margin: 20px 0;
+            }
+
+            .ai-chat {
+                width: 90%;
+                bottom: 10px;
+                left: 5%;
+            }
+
+            .title-gradient {
+                font-size: 2.5rem;
+            }
+
+            .sweet-message, .sweet-message-2 {
+                font-size: 1.2rem;
+            }
+
+            .question-card-big {
+                padding: 1.5rem;
+            }
+
+            .question-icon-big {
+                font-size: 3rem;
+            }
+
+            .question-text-big {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="three-container"></div>
+    
+    <!-- Floating decorative elements -->
+    <div class="floating-elements">
+        <div class="floating-star" style="top: 10%; left: 5%;">⭐</div>
+        <div class="floating-shield" style="top: 20%; right: 10%;">🛡️</div>
+        <div class="floating-star" style="top: 60%; left: 8%;">✨</div>
+        <div class="floating-shield" style="top: 80%; right: 15%;">🔒</div>
+        <div class="floating-star" style="top: 40%; left: 90%;">💎</div>
+        <div class="floating-shield" style="top: 70%; left: 85%;">🔐</div>
+    </div>
+    
+    <div class="container">
+        <!-- Title Section -->
+        <div class="title-section">
+            <h1 class="title-gradient">🐧 Cyber Safety Captain Penguin! 🐧</h1>
+            <p class="sweet-message">🌟 Welcome aboard, brave sailor! Let's learn amazing cyber safety secrets! ⭐</p>
+            <p class="sweet-message-2">✨ Together we'll explore the digital ocean safely! 🌊</p>
+        </div>
+
+        <!-- Score Board -->
+        <div class="score-board-container">
+            <div class="score-board">
+                <div class="score">Score: <span id="score-value">0</span>/100</div>
+                <div class="badges" id="badges"></div>
+            </div>
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-grid">
+            <div class="question-card-big" onclick="showAnswer('passwords')">
+                <span class="question-icon-big">🔐</span>
+                <div class="question-text-big">How do I create a strong password?</div>
+            </div>
+            
+            <div class="question-card-big" onclick="showAnswer('strangers')">
+                <span class="question-icon-big">👥</span>
+                <div class="question-text-big">What should I do if a stranger contacts me online?</div>
+            </div>
+            
+            <div class="question-card-big" onclick="showAnswer('personal-info')">
+                <span class="question-icon-big">📱</span>
+                <div class="question-text-big">What personal information should I never share?</div>
+            </div>
+            
+            <div class="question-card-big" onclick="showAnswer('cyberbullying')">
+                <span class="question-icon-big">🚫</span>
+                <div class="question-text-big">How do I deal with cyberbullying?</div>
+            </div>
+            
+            <div class="question-card-big" onclick="showAnswer('downloads')">
+                <span class="question-icon-big">⬇️</span>
+                <div class="question-text-big">Is it safe to download files from the internet?</div>
+            </div>
+            
+            <div class="question-card-big" onclick="showAnswer('social-media')">
+                <span class="question-icon-big">📸</span>
+                <div class="question-text-big">How should I behave on social media?</div>
+            </div>
+
+            <div class="question-card-big" onclick="showAnswer('wifi-safety')">
+                <span class="question-icon-big">📶</span>
+                <div class="question-text-big">Is public WiFi safe to use?</div>
+            </div>
+
+            <div class="question-card-big" onclick="showAnswer('email-safety')">
+                <span class="question-icon-big">📧</span>
+                <div class="question-text-big">How can I spot suspicious emails?</div>
+            </div>
+
+            <div class="question-card-big" onclick="showAnswer('gaming-safety')">
+                <span class="question-icon-big">🎮</span>
+                <div class="question-text-big">How do I stay safe while gaming online?</div>
+            </div>
+
+            <div class="question-card-big" onclick="showAnswer('privacy-settings')">
+                <span class="question-icon-big">⚙️</span>
+                <div class="question-text-big">Why are privacy settings important?</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Captain Penguin Character -->
+    <div class="tutor-container">
+        <div class="penguin-captain" id="tutor">
+            <div class="penguin-head">
+                <div class="captain-hat"></div>
+                <div class="eye left-eye">
+                    <div class="eyeball" id="left-eyeball"></div>
+                </div>
+                <div class="eye right-eye">
+                    <div class="eyeball" id="right-eyeball"></div>
+                </div>
+                <div class="penguin-beak"></div>
+                <div class="penguin-mouth" id="tutor-mouth"></div>
+            </div>
+            <div class="penguin-body">
+                <div class="penguin-wings"></div>
+                <div class="captain-badge"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Answer Modal -->
+    <div class="answer-modal" id="answerModal">
+        <div class="answer-card">
+            <span class="close-btn" onclick="closeAnswerModal()">&times;</span>
+            <div class="answer-text" id="answer-text"></div>
+            <button class="speak-btn" onclick="speakAnswer()">🔊 Let Captain Penguin Read This!</button>
+        </div>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div class="celebration-modal" id="celebrationModal" style="display: none;">
+        <div class="celebration-content">
+            <div class="celebration-title">🎉 AMAZING! 🎉</div>
+            <div class="celebration-message">
+                Congratulations, brave cyber explorer! 🌟<br/>
+                You've learned so much about online safety! 🏆<br/>
+                Captain Penguin is super proud of you! 🐧💙
+            </div>
+            <button class="celebration-btn" onclick="closeCelebration()">Continue Learning! 🚀</button>
+        </div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="api-key-modal" id="apiKeyModal">
+        <div class="api-key-card">
+            <h3>🔑 Connect Captain Penguin's Brain!</h3>
+            <p>To make me super smart, please enter your Gemini API key:</p>
+            <input type="password" class="api-key-input" id="api-key-input" placeholder="Enter your Gemini API key...">
+            <button class="api-key-save" onclick="saveApiKey()">Connect Captain Penguin! 🐧</button>
+            <small>Get your free API key from <a href="https://makersuite.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a></small>
+        </div>
+    </div>
+
+    <!-- AI Chat -->
+    <div class="ai-chat" id="aiChat">
+        <div class="ai-header" onclick="toggleAiChat()">
+            <span>🐧 Ask Captain Penguin</span>
+            <span id="chat-toggle">📝</span>
+        </div>
+        <div class="ai-messages" id="ai-messages">
+            <div class="message ai-message">
+                Ahoy sailor! I'm Captain Penguin. Ask me any question about online safety!
+            </div>
+        </div>
+        <div class="ai-input-container">
+            <input type="text" class="ai-input" id="ai-input" placeholder="Ask me anything about online safety...">
+            <button class="ai-send" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti" id="confetti" style="display: none;"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+
+    <script>
+        // Global variables
+        let score = 0;
+        let answeredQuestions = new Set();
+        let geminiApiKey = '';
+        let isApiKeySet = false;
+        let aiChatMinimized = true;
+        let currentUtterance = null;
+        let showCelebration = false;
+        let showConfetti = false;
+
+        // Predefined answers for 10 questions
+        const answers = {
+            passwords: "Great question, sailor! A strong password should be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special symbols. Never use your birthday, name, or simple words. Think of a secret code only you would know!",
+            strangers: "Ahoy there! If a stranger contacts you online, never give them any personal information! Tell your parent or guardian right away. Don't answer their questions, don't meet them in person, and don't accept friend requests from people you don't know in real life. Remember: real friends don't ask for secrets!",
+            "personal-info": "Never share your full name, address, phone number, school name, passwords, or photos online with strangers. Your personal information is like treasure - you wouldn't give your treasure map to someone you don't know! Always ask a trusted grown-up before sharing anything online.",
+            cyberbullying: "If someone is being mean to you online, don't reply to them. Take screenshots of the mean messages, block the person, and tell a trusted adult immediately. Remember: it's not your fault, and you deserve to feel safe online. You're brave for asking for help!",
+            downloads: "Only download files from websites that your parents say are safe! Many downloads can contain sneaky pirates (viruses) that can hurt your computer or steal your information. Always ask an adult before downloading anything, even if it looks fun or free.",
+            "social-media": "On social media, be kind to others, think before you post, and remember that everything online can be seen by many people. Don't post personal information, and if something makes you uncomfortable, talk to a trusted adult. Treat others online the same way you'd treat them in person!",
+            "wifi-safety": "Public WiFi can be dangerous! Never enter passwords or personal information when using public WiFi at cafes, libraries, or stores. Bad people can spy on what you're doing. Ask your parents to help you use secure networks instead!",
+            "email-safety": "Watch out for suspicious emails! Never click links or download attachments from people you don't know. If an email asks for your password or personal information, it's probably fake. Always ask an adult to check emails that seem strange or scary.",
+            "gaming-safety": "When gaming online, never share your real name, address, or meet players in real life. Use the game's reporting system if someone is being mean or inappropriate. Remember: keep your gaming fun and safe by playing with friends you know!",
+            "privacy-settings": "Privacy settings are like locks on your digital doors! They help control who can see your posts, photos, and information. Always ask a trusted adult to help you set up strong privacy settings on all your apps and accounts."
+        };
+
+        // Initialize the application
+        window.addEventListener('load', function() {
+            initializeApp();
+            setupThreeJS();
+            setupMouseTracking();
+            checkApiKey();
+            createFloatingElements();
+        });
+
+        function initializeApp() {
+            // Initialize AI chat as minimized
+            const aiChat = document.getElementById('aiChat');
+            aiChat.classList.add('minimized');
+            
+            // Setup enter key listener for AI input
+            document.getElementById('ai-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Setup enter key listener for API key input
+            document.getElementById('api-key-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveApiKey();
+                }
+            });
+        }
+
+        function createFloatingElements() {
+            // Add more floating elements dynamically
+            const container = document.querySelector('.floating-elements');
+            const elements = ['🌟', '💫', '✨', '🔒', '🛡️', '🔐', '💎', '⭐'];
+            
+            for (let i = 0; i < 8; i++) {
+                const element = document.createElement('div');
+                element.className = Math.random() > 0.5 ? 'floating-star' : 'floating-shield';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.top = Math.random() * 100 + '%';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(element);
+            }
+        }
+
+        function checkApiKey() {
+            const savedApiKey = localStorage.getItem('gemini_api_key');
+            if (savedApiKey) {
+                geminiApiKey = savedApiKey;
+                isApiKeySet = true;
+                document.getElementById('apiKeyModal').style.display = 'none';
+                
+                // Update AI message
+                const messagesContainer = document.getElementById('ai-messages');
+                messagesContainer.innerHTML = '<div class="message ai-message">Ahoy sailor! I\'m Captain Penguin and I\'m connected to my smart brain now! Ask me any question about online safety!</div>';
+                
+                // Welcome speech
+                setTimeout(() => {
+                    const hasSpokenWelcome = localStorage.getItem('captain_welcome_spoken');
+                    if (!hasSpokenWelcome) {
+                        speakText("Ahoy there, mateys! I'm Captain Penguin, your cyber safety guide. Click on any question card to learn about staying safe in the digital ocean!");
+                        localStorage.setItem('captain_welcome_spoken', 'true');
+                    }
+                }, 2000);
+            } else {
+                document.getElementById('apiKeyModal').style.display = 'flex';
+            }
+        }
+
+        function saveApiKey() {
+            const apiKeyInput = document.getElementById('api-key-input');
+            const apiKey = apiKeyInput.value.trim();
+            
+            if (apiKey) {
+                localStorage.setItem('gemini_api_key', apiKey);
+                geminiApiKey = apiKey;
+                isApiKeySet = true;
+                document.getElementById('apiKeyModal').style.display = 'none';
+                
+                // Update AI message
+                const messagesContainer = document.getElementById('ai-messages');
+                messagesContainer.innerHTML = '<div class="message ai-message">Ahoy sailor! I\'m Captain Penguin and I\'m connected to my smart brain now! Ask me any question about online safety!</div>';
+            }
+        }
+
+        function showAnswer(questionType) {
+            const answer = answers[questionType] || "";
+            document.getElementById('answer-text').textContent = answer;
+            document.getElementById('answerModal').style.display = 'flex';
+            
+            // Add points if first time answering (10 points per question for 100 total)
+            if (!answeredQuestions.has(questionType)) {
+                answeredQuestions.add(questionType);
+                updateScore(10);
+                addBadge();
+            }
+        }
+
+        function closeAnswerModal() {
+            document.getElementById('answerModal').style.display = 'none';
+            
+            // Stop any current speech
+            if (currentUtterance) {
+                window.speechSynthesis.cancel();
+                const tutorMouth = document.getElementById('tutor-mouth');
+                if (tutorMouth) {
+                    tutorMouth.classList.remove('speaking');
+                }
+                currentUtterance = null;
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('score-value').textContent = score;
+            
+            // Update progress bar
+            const progressWidth = Math.min((score / 100) * 100, 100);
+            document.getElementById('progress-bar').style.width = progressWidth + '%';
+            
+            // Check for 100 points celebration
+            if (score >= 100 && !showCelebration) {
+                setTimeout(() => {
+                    showCelebration = true;
+                    showConfetti = true;
+                    document.getElementById('celebrationModal').style.display = 'flex';
+                    document.getElementById('confetti').style.display = 'block';
+                    createConfetti();
+                    speakText("Congratulations, brave cyber explorer! You've successfully learned all the super important online safety lessons! Captain Penguin is so proud of you!");
+                }, 1000);
+            }
+        }
+
+        function addBadge() {
+            const badges = document.getElementById('badges');
+            const badgeEmojis = ['🏆', '⭐', '🎯', '🛡️', '💪', '🎉', '🌟', '💎', '🔒', '🎊'];
+            const badge = document.createElement('div');
+            badge.className = 'badge';
+            badge.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            badge.textContent = badgeEmojis[Math.floor(Math.random() * badgeEmojis.length)];
+            badges.appendChild(badge);
+        }
+
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            confettiContainer.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.className = 'confetti-piece';
+                confettiPiece.style.left = `${Math.random() * 100}%`;
+                confettiPiece.style.animationDelay = `${Math.random() * 3}s`;
+                confettiPiece.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        function closeCelebration() {
+            showCelebration = false;
+            showConfetti = false;
+            document.getElementById('celebrationModal').style.display = 'none';
+            document.getElementById('confetti').style.display = 'none';
+            
+            // Stop any current speech
+            if (currentUtterance) {
+                window.speechSynthesis.cancel();
+                const tutorMouth = document.getElementById('tutor-mouth');
+                if (tutorMouth) {
+                    tutorMouth.classList.remove('speaking');
+                }
+                currentUtterance = null;
+            }
+        }
+
+        function speakText(text) {
+            // Stop any current speech
+            if (currentUtterance) {
+                window.speechSynthesis.cancel();
+                const tutorMouth = document.getElementById('tutor-mouth');
+                if (tutorMouth) {
+                    tutorMouth.classList.remove('speaking');
+                }
+            }
+
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1.1;
+                utterance.volume = 1;
+                
+                // Animate mouth while speaking
+                const tutorMouth = document.getElementById('tutor-mouth');
+                if (tutorMouth) {
+                    tutorMouth.classList.add('speaking');
+                    
+                    utterance.onend = () => {
+                        if (tutorMouth) {
+                            tutorMouth.classList.remove('speaking');
+                        }
+                        currentUtterance = null;
+                    };
+                }
+                
+                currentUtterance = utterance;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Sorry, your browser doesn\'t support text-to-speech!');
+            }
+        }
+
+        function speakAnswer() {
+            const answerText = document.getElementById('answer-text').textContent;
+            speakText(answerText);
+        }
+
+        function toggleAiChat() {
+            const aiChat = document.getElementById('aiChat');
+            const chatToggle = document.getElementById('chat-toggle');
+            
+            aiChatMinimized = !aiChatMinimized;
+            
+            if (aiChatMinimized) {
+                aiChat.classList.add('minimized');
+                chatToggle.textContent = '📝';
+            } else {
+                aiChat.classList.remove('minimized');
+                chatToggle.textContent = '🔽';
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('ai-input');
+            const messagesContainer = document.getElementById('ai-messages');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = message;
+            messagesContainer.appendChild(userMessage);
+            
+            input.value = '';
+            
+            // Add thinking message
+            setTimeout(async () => {
+                const thinkingMessage = document.createElement('div');
+                thinkingMessage.className = 'message ai-message';
+                thinkingMessage.textContent = '🤔 Captain Penguin is thinking...';
+                messagesContainer.appendChild(thinkingMessage);
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Get response from Gemini
+                const response = await callGeminiAPI(message);
+                
+                // Replace thinking message with response
+                thinkingMessage.textContent = response;
+                
+                // Captain reads the response aloud
+                speakText(response);
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 300);
+        }
+
+        async function callGeminiAPI(message) {
+            if (!geminiApiKey) {
+                return "Ahoy! I need my API key to be super smart. Please set it up first!";
+            }
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `You are Captain Penguin, a friendly cyber safety tutor for kids aged 6-12. Please respond to this question in a fun, safe, and educational way suitable for children. Keep your response short (2-3 sentences max) and use simple words. Always prioritize child safety and encourage them to talk to trusted adults when needed. Use nautical terms occasionally like "ahoy", "sailor", "matey" to stay in character. Question: ${message}`
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                    return data.candidates[0].content.parts[0].text;
+                } else {
+                    console.error('Unexpected API response structure:', data);
+                    return "Ahoy! I'm having trouble understanding right now. Can you ask me about passwords, online strangers, or how to stay safe online?";
+                }
+            } catch (error) {
+                console.error('Gemini API Error:', error);
+                return "Oops! I'm having technical difficulties, matey. Try asking me about cyber safety tips!";
+            }
+        }
+
+        function setupMouseTracking() {
+            document.addEventListener('mousemove', function(e) {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                // Update custom cursor
+                const cursor = document.getElementById('custom-cursor');
+                if (cursor) {
+                    cursor.style.left = `${mouseX}px`;
+                    cursor.style.top = `${mouseY}px`;
+                }
+
+                // Update eyeball positions
+                updateEyeballs(mouseX, mouseY);
+            });
+        }
+
+        function updateEyeballs(mouseX, mouseY) {
+            const leftEyeball = document.getElementById('left-eyeball');
+            const rightEyeball = document.getElementById('right-eyeball');
+            const tutorElement = document.getElementById('tutor');
+            
+            if (!leftEyeball || !rightEyeball || !tutorElement) return;
+
+            const tutorRect = tutorElement.getBoundingClientRect();
+            const centerX = tutorRect.left + tutorRect.width / 2;
+            const centerY = tutorRect.top + tutorRect.height / 3;
+            
+            const deltaX = mouseX - centerX;
+            const deltaY = mouseY - centerY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            const maxMove = 6;
+            const moveX = Math.max(-maxMove, Math.min(maxMove, (deltaX / Math.max(1, distance)) * maxMove));
+            const moveY = Math.max(-maxMove, Math.min(maxMove, (deltaY / Math.max(1, distance)) * maxMove));
+            
+            leftEyeball.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+            rightEyeball.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+        }
+
+        function setupThreeJS() {
+            const threeContainer = document.getElementById('three-container');
+            if (!threeContainer) return;
+
+            let scene, camera, renderer, particles = [];
+
+            // Scene setup
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            threeContainer.appendChild(renderer.domElement);
+
+            // Create floating particles
+            const stickerGeometries = [
+                new THREE.PlaneGeometry(10, 10),
+                new THREE.PlaneGeometry(8, 8),
+                new THREE.PlaneGeometry(6, 6)
+            ];
+
+            const placeholderColors = [0x6691e4, 0xe466c7, 0x66e4a1, 0xe4c166, 0x9866e4];
+
+            for (let i = 0; i < 30; i++) {
+                const geometryIndex = Math.floor(Math.random() * stickerGeometries.length);
+                const colorIndex = Math.floor(Math.random() * placeholderColors.length);
+                
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: placeholderColors[colorIndex],
+                    transparent: true,
+                    opacity: 0.7,
+                    side: THREE.DoubleSide
+                });
+
+                const particle = new THREE.Mesh(stickerGeometries[geometryIndex], material);
+                
+                particle.position.x = (Math.random() - 0.5) * 200;
+                particle.position.y = (Math.random() - 0.5) * 200;
+                particle.position.z = (Math.random() - 0.5) * 200;
+                
+                const velocity = {
+                    x: (Math.random() - 0.5) * 0.2,
+                    y: (Math.random() - 0.5) * 0.2,
+                    z: (Math.random() - 0.5) * 0.2
+                };
+                
+                particles.push({ mesh: particle, velocity });
+                scene.add(particle);
+            }
+
+            camera.position.z = 50;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                particles.forEach(particle => {
+                    particle.mesh.position.x += particle.velocity.x;
+                    particle.mesh.position.y += particle.velocity.y;
+                    particle.mesh.position.z += particle.velocity.z;
+                    
+                    particle.mesh.rotation.x += 0.01;
+                    particle.mesh.rotation.y += 0.01;
+
+                    // Boundary check
+                    if (Math.abs(particle.mesh.position.x) > 100) particle.velocity.x *= -1;
+                    if (Math.abs(particle.mesh.position.y) > 100) particle.velocity.y *= -1;
+                    if (Math.abs(particle.mesh.position.z) > 100) particle.velocity.z *= -1;
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('answerModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAnswerModal();
+            }
+        });
+    </script>
+</body>
+</html>
