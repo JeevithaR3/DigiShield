@@ -1,0 +1,31 @@
+{
+  "name": "digishield",
+  "version": "1.0.0",
+  "description": "**AI Defender for Children** is a Chrome Extension + Web Dashboard that safeguards children from online toxicity. Powered by advanced AI, it scans web content in real time, detects harmful messages like grooming, bullying, or hate speech, and alerts parents with actionable insights — all while preserving a child-friendly experience.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeevithaR3/DigiShield.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JeevithaR3/DigiShield/issues"
+  },
+  "homepage": "https://github.com/JeevithaR3/DigiShield#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1"
+  }
+}
