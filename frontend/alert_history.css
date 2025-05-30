@@ -1,347 +1,178 @@
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow-x: hidden;
-    font-family: 'Poppins', sans-serif;
-    scroll-behavior: smooth;
-}
-
-a:focus, button:focus {
-    outline: 2px solid #5edae8;
-    outline-offset: 2px;
-}
-
+/* ======= Base Styles ======= */
 body {
-    background: linear-gradient(135deg,
-        #0a0c0e 0%,
-        #0d1420 25%,
-        #0f0a1e 50%,
-        #0c0613 75%,
-        #0a0c0e 100%);
-    color: #ffffff;
-    min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.6;
-
-    /* --- IMPORTANT CHANGES FOR FOOTER FIX --- */
-    display: flex;
-    flex-direction: column; /* Stack children vertically: Navbar, Sidebar, Main Content, Footer */
-    /* Removed justify-content/align-items from body here, as they're managed by child elements */
+  font-family: 'Poppins', sans-serif; /* keep your font */
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f0faf6 0%, #daf2e5 40%, #e6f4ea 70%, #f9fdfb 100%);
+  color: #2d4a3d; /* soft dark green */
 }
 
-/* Navbar */
+/* ======= Navbar ======= */
 .navbar {
-    position: fixed; /* Keep fixed for now */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: rgba(15, 18, 20, 0.95);
-    backdrop-filter: blur(12px);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1.5px solid #a6d7b8;
+  box-shadow: 0 2px 12px rgba(72, 187, 120, 0.15);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
 }
 
 .logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #2d4a3d;
 }
 
 .nav-links a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  color: #2d4a3d;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-    background: rgba(94, 218, 232, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(94, 218, 232, 0.4);
-    border: 1px solid rgba(94, 218, 232, 0.3);
+  background: rgba(72, 187, 120, 0.18);
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+  color: #2d4a3d;
 }
 
-/* Sidebar */
+/* ======= Sidebar ======= */
 .dashboard-sidebar {
-    position: fixed; /* Keep fixed for now */
-    left: 0;
-    top: 60px; /* Offset for navbar */
-    width: 280px;
-    height: calc(100% - 60px);
-    background: rgba(15, 18, 20, 0.85);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 1.5rem;
-    box-shadow: inset -3px 0 8px rgba(0, 0, 0, 0.4);
-    z-index: 99;
+  position: fixed;
+  top: 64px; /* navbar height */
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 64px);
+  background: rgba(255, 255, 255, 0.85);
+  border-right: 1.5px solid #a6d7b8;
+  box-shadow: inset -3px 0 6px rgba(72, 187, 120, 0.05);
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  z-index: 50;
 }
 
 .dashboard-sidebar a {
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    padding: 0.75rem 1.3rem;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-    margin-bottom: 0.8rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.sidebar-icon-container {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
-    transition: all 0.3s ease;
-}
-
-.sidebar-icon {
-    color: white;
+  padding: 1rem 1.5rem;
+  color: #2d4a3d;
+  text-decoration: none;
+  font-weight: 600;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
 }
 
 .dashboard-sidebar a:hover,
 .dashboard-sidebar a.active {
-    background: rgba(94, 218, 232, 0.15);
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 0 12px rgba(94, 218, 232, 0.4);
+  background: rgba(72, 187, 120, 0.12);
+  box-shadow: 0 0 10px rgba(72, 187, 120, 0.2);
+  border-left: 3px solid #48bb78;
+  color: #2d4a3d;
 }
 
-.dashboard-sidebar a.active {
-    background: linear-gradient(135deg, rgba(94, 218, 232, 0.2), rgba(178, 96, 255, 0.2));
-    border-left: 3px solid #5edae8;
+.sidebar-icon-container {
+  background: linear-gradient(135deg, #a8f5c0, #cceee5);
+  border-radius: 6px;
+  margin-right: 0.75rem;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2d4a3d;
 }
 
-/* --- Alert History Specific Styles (now including sticky footer logic) --- */
+/* ======= Main Content ======= */
 .alerts-main {
-    /* Removed: margin-left: 280px; margin-top: 60px; (These will be handled by padding on body) */
-    padding: 2rem;
-    flex-grow: 1; /* This is crucial: make main content expand */
-    min-height: calc(100vh - 60px); /* Keep this as a minimum height to ensure it pushes footer */
-    animation: fadeInUp 0.6s ease-out;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers .alerts-content horizontally */
-
-    /* Add padding-left to account for fixed sidebar */
-    /* Add padding-top to account for fixed navbar */
-    padding-left: calc(280px + 2rem); /* sidebar width + alerts-main's own left padding */
-    padding-top: calc(60px + 2rem); /* navbar height + alerts-main's own top padding */
-    width: 100%; /* Now takes full width of available space, less sidebar */
-    box-sizing: border-box; /* Ensure padding is included in the width */
-}
-
-/* Compensate for fixed navbar and sidebar by adjusting main content padding */
-/* This is an alternative to margin-left/margin-top on .alerts-main */
-body {
-    /* ... existing flex-direction: column ... */
-    padding-top: 60px; /* Space for the navbar */
-    padding-left: 280px; /* Space for the sidebar */
-    box-sizing: border-box;
-}
-
-/* Reset these on .alerts-main as body padding now handles it */
-.alerts-main {
-    margin-left: 0; /* No longer needed as body has padding-left */
-    margin-top: 0; /* No longer needed as body has padding-top */
-    padding: 2rem; /* Keep this for internal spacing */
-}
-
-
-/* Set max-width on the *inner* content container to prevent it from being too wide */
-.alerts-content {
-    max-width: 1000px; /* Limit the actual content width */
-    width: 100%; /* Make it fill its parent up to max-width */
-}
-
-.alerts-content h2 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 10px rgba(94, 218, 232, 0.5);
-    text-align: center; /* Center the title */
-}
-
-.alerts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem; /* Space between alert cards */
+  margin-left: 250px;
+  padding: 2rem;
+  min-height: 100vh;
+  background: transparent; /* keep to show body gradient */
+  color: #2d4a3d;
 }
 
 .alert-card {
-    background: rgba(255, 255, 255, 0.05); /* Slightly visible background */
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-    display: flex; /* For better control of text alignment/flow */
-    align-items: flex-start; /* Align text to top if multiple lines */
+  background: #ffffffdd;
+  border: 1px solid #c4e7cb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.08);
+  transition: all 0.3s ease;
 }
 
 .alert-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(94, 218, 232, 0.2);
-    border-color: rgba(94, 218, 232, 0.3);
+  box-shadow: 0 8px 20px rgba(72, 187, 120, 0.2);
+  border-color: #9cd9a6;
 }
 
 .alert-card strong {
-    color: #5edae8; /* Highlight the timestamp */
-    margin-right: 0.5rem;
-    white-space: nowrap; /* Keep timestamp on one line */
+  color: #48bb78;
 }
 
-/* Footer Styles */
+/* ======= Buttons ======= */
+button, .btn {
+  background-color: #48bb78;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+button:hover, .btn:hover {
+  background-color: #3ca462;
+}
+
+/* ======= Inputs ======= */
+input, select, textarea {
+  border: 1.5px solid #a6d7b8;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: #2d4a3d;
+  background-color: #f9fdfb;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #48bb78;
+  box-shadow: 0 0 6px rgba(72, 187, 120, 0.5);
+}
+
+/* ======= Footer ======= */
 footer {
-    /* Removed: position: relative; bottom: 0; */
-    width: 100%; /* Ensure it spans the full width */
-    padding: 1.5rem 0;
-    text-align: center;
-    background: rgba(15, 18, 20, 0.9);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
-    /* margin-top: auto; - Now pushed by flex-grow on main content */
-    z-index: 10;
-    /* Add padding-left to align with main content */
-    padding-left: 280px; /* To account for the sidebar */
-    box-sizing: border-box; /* Crucial for padding calculation */
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 1.5px solid #a6d7b8;
+  color: #2d4a3d;
+  text-align: center;
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
 }
 
-
-/* Animations */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ======= Utility classes ======= */
+.text-green {
+  color: #48bb78 !important;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 1rem 1.5rem;
-    }
-
-    .nav-links {
-        display: none;
-    }
-
-    .dashboard-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative; /* Change to relative for mobile */
-        top: 0;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1rem 1rem;
-        flex-direction: row;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
-
-    .dashboard-sidebar a {
-        flex-basis: 45%;
-        margin-bottom: 0.5rem;
-        justify-content: center;
-        text-align: center;
-        padding: 0.8rem 0.5rem;
-    }
-    .dashboard-sidebar a .sidebar-icon-container {
-        margin-bottom: 0.5rem;
-    }
-
-    body {
-        padding-top: 60px; /* Still need navbar padding */
-        padding-left: 0; /* Remove sidebar padding on mobile */
-        flex-direction: column; /* Ensure vertical stack on mobile */
-    }
-
-    .alerts-main {
-        margin-left: 0; /* Reset margins */
-        margin-top: 0;
-        padding: 1.5rem;
-        width: 100%; /* Occupy full width */
-        align-items: stretch; /* Allow internal content to stretch */
-        padding-left: 1.5rem; /* Reset padding for mobile */
-        padding-top: 1.5rem; /* Reset padding for mobile */
-    }
-
-    footer {
-        padding-left: 0; /* No sidebar on mobile */
-    }
-
-    .alerts-content h2 {
-        font-size: 2rem;
-    }
+.bg-green-light {
+  background-color: #daf2e5 !important;
 }
 
-@media (max-width: 480px) {
-    .logo-text {
-        font-size: 1.3rem;
-    }
-
-    .alerts-content h2 {
-        font-size: 1.8rem;
-    }
-
-    .alerts-main {
-        padding: 1rem;
-    }
-
-    .alert-card {
-        padding: 1rem;
-        flex-direction: column; /* Stack timestamp and message on small screens */
-        align-items: flex-start;
-    }
-    .alert-card strong {
-        margin-right: 0;
-        margin-bottom: 0.4rem; /* Space below timestamp */
-        white-space: normal; /* Allow timestamp to wrap */
-    }
+/* Smooth transitions everywhere */
+* {
+  transition: all 0.3s ease;
 }

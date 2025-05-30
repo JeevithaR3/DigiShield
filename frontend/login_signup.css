@@ -3,144 +3,85 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: all 0.3s ease;
 }
+
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow-x: hidden;
-    font-family: 'Poppins', sans-serif;
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
+
 a:focus, button:focus {
-    outline: 2px solid #5edae8;
-    outline-offset: 2px;
+  outline: 3px solid #48bb78;
+  outline-offset: 2px;
 }
-/* Enhanced container for better handling of tall content */
+
+/* Body Styling */
 body {
-    background: linear-gradient(135deg, 
-    #0a0c0e 0%, 
-    #0d1420 25%, 
-    #0f0a1e 50%, 
-    #0c0613 75%, 
-    #0a0c0e 100%);
-  
-  font-family: 'Poppins', sans-serif;
-  color: #ffffff;
+  background: linear-gradient(135deg, 
+    #f8fffe 0%, 
+    #f0f9f7 25%, 
+    #e8f5f0 50%, 
+    #f2f8f5 75%, 
+    #fafffe 100%);
+  color: #2d4a3d;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
-   /* Increased top/bottom padding */
+  line-height: 1.6;
 }
 
+/* Container Card */
 .container {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
   border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2),
-              0 0 60px rgba(94, 218, 232, 0.1),
-              0 0 100px rgba(178, 96, 255, 0.05);
+  box-shadow: 0 8px 30px rgba(72, 187, 120, 0.1);
   width: 100%;
   max-width: 400px;
   padding: 35px 30px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-image: linear-gradient(135deg, #c9f6e1, #d4f7eb) 1;
   max-height: 90vh;
   overflow-y: auto;
   transition: all 0.3s ease;
   margin: 20px 0;
- /* Add margin to ensure there's space at top and bottom */
 }
 
-/* Make the forms more compact */
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Reduced from 15px */
-  margin-bottom: 10px;
-}
-
-header h1 {
-  font-size: 1.7rem; /* Slightly smaller */
-  margin-bottom: 6px; /* Reduced space */
-  background: linear-gradient(135deg, #5edae8, #b260ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-header p {
-  font-size: 0.9rem; /* Smaller */
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 20px; /* Reduced space */
-}
-
-/* Tab navigation - more compact */
-.tabs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px; /* Reduced from 25px */
-  gap: 10px; /* Reduced from 12px */
-}
-
-/* Adjust input fields to be more compact */
-.auth-form input {
-  padding: 9px 14px; /* Reduced height */
-}
-
-/* Add a start position for forms to ensure they start at the top */
-#login-form, #signup-form, #forgot-password {
-  position: relative;
-  top: 0;
-}
-
-/* Add a script to ensure form is at top when switching tabs */
-@keyframes smoothScroll {
-  0% { scroll-margin-top: 0; }
-  100% { scroll-margin-top: 10px; }
-}
-
-.container {
-  scroll-behavior: smooth;
-}
-
-/* Media query adjustment for smaller screens */
-@media (max-height: 700px) {
-  .container {
-    padding: 25px 20px;
-    max-height: 85vh;
-  }
-  
-  .auth-form {
-    gap: 10px;
-  }
-  
-  .tabs button {
-    padding: 8px 16px;
-  }
+.container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(72, 187, 120, 0.15);
+  border-color: #b8e6d3;
 }
 
 /* Header */
 header h1 {
   font-size: 1.8rem;
   margin-bottom: 8px;
-  /* Gradient text like landing page */
-  background: linear-gradient(135deg, #5edae8, #b260ff);
+  background: linear-gradient(135deg, #48bb78, #38a169);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 6px rgba(72, 187, 120, 0.2);
 }
 
 header p {
   font-size: 1rem;
-  /* Updated to match landing page subtitle color */
-  color: rgba(255, 255, 255, 0.85);
+  color: #4a6b5a;
   margin-bottom: 25px;
 }
 
-/* Tab navigation */
+/* Tabs */
 .tabs {
   display: flex;
   justify-content: center;
@@ -149,11 +90,12 @@ header p {
 }
 
 .tabs button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #e8f5f0;
   padding: 10px 20px;
-  border-radius: 12px;
-  color: #ffffff;
+  border-radius: 15px;
+  color: #2d4a3d;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -161,57 +103,117 @@ header p {
 
 .tabs button.active,
 .tabs button:hover {
-  background: linear-gradient(135deg, #5edae8, #b260ff);
-  color: #ffffff;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(94, 218, 232, 0.3);
-  border: none;
+  background: #48bb78;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+  border-color: #48bb78;
 }
 
-/* Auth forms */
+.tabs button.active::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  border-radius: 17px;
+  z-index: -1;
+  opacity: 0.3;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.tabs button.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  animation: shimmer 2s infinite;
+  border-radius: 15px;
+}
+
+/* Auth Form */
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-bottom: 10px;
+  animation: formFadeIn 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes formFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .auth-form input {
   padding: 10px 14px;
   font-size: 0.95rem;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.07);
-  color: #ffffff;
+  border: 2px solid #e8f5f0;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2d4a3d;
   transition: all 0.3s ease;
 }
 
 .auth-form input:focus {
-  outline: 2px solid #5edae8;
-  border-color: transparent;
-  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  border-color: #48bb78;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(72, 187, 120, 0.3), 0 0 2px #48bb78;
+}
+
+.auth-form input:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.1);
+}
+
+.auth-form input::placeholder {
+  color: #4a6b5a;
 }
 
 /* Buttons */
 .primary-btn {
-  background: linear-gradient(135deg, #5edae8, #b260ff);
+  background: linear-gradient(135deg, #48bb78, #38a169);
   border: none;
   padding: 12px;
   border-radius: 12px;
-  color: #ffffff;
+  color: white;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(94, 218, 232, 0.3);
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+  overflow: hidden;
+  position: relative;
 }
 
 .primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(94, 218, 232, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
 }
 
-/* Forgot password link */
+.primary-btn::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Forgot Password */
 .forgot-password {
   text-align: right;
   margin-top: -8px;
@@ -220,54 +222,88 @@ header p {
 
 .forgot-password a {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #4a6b5a;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .forgot-password a:hover {
-  color: #5edae8;
-  text-decoration: none;
+  color: #48bb78;
 }
 
-/* Form toggle visibility */
-.hidden {
-  display: none;
-}
-
-/* Messages */
+/* Message Styling */
 .message {
   font-size: 0.9rem;
   margin-top: 8px;
-  color: #ffffff;
+  color: #2d4a3d;
   min-height: 20px;
 }
 
-/* Reset form */
+/* Reset Password */
 #forgot-password h3 {
   font-size: 1.1rem;
   margin-bottom: 8px;
-  color: #ffffff;
+  color: #2d4a3d;
+  font-weight: 600;
 }
 
 #forgot-password p {
   font-size: 0.9rem;
   margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.85);
+  color: #4a6b5a;
+}
+
+/* Hidden */
+.hidden {
+  display: none;
 }
 
 /* Scrollbar */
 .container::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+}
+.container::-webkit-scrollbar-track {
+  background: rgba(72, 187, 120, 0.05);
+  border-radius: 16px;
 }
 .container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  border-radius: 16px;
 }
 
-/* Responsive */
+/* Animations */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(72, 187, 120, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(72, 187, 120, 0.8);
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Media Queries */
 @media (max-width: 480px) {
   .container {
     padding: 25px 20px;
+  }
+}
+
+@media (max-height: 700px) {
+  .container {
+    padding: 25px 20px;
+    max-height: 85vh;
+  }
+
+  .auth-form {
+    gap: 10px;
+  }
+
+  .tabs button {
+    padding: 8px 16px;
   }
 }

@@ -21,263 +21,213 @@ a:focus, button:focus {
 }
 
 body {
-  background: linear-gradient(135deg, 
-      #0a0c0e 0%, 
-      #0d1420 25%, 
-      #0f0a1e 50%, 
-      #0c0613 75%, 
-      #0a0c0e 100%);
-  min-height: 100vh;
-  overflow-x: hidden;
-  color: #fff;
+    background: linear-gradient(135deg, 
+        #f8fffe 0%, 
+        #f0f9f7 25%, 
+        #e8f5f0 50%, 
+        #f2f8f5 75%, 
+        #fafffe 100%);
+    color: #2d4a3d;
+    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.6;
 }
 
-
 /* Navbar */
-<<<<<<< HEAD
-    .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        background: rgba(15, 18, 20, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .logo-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: linear-gradient(135deg, #5edae8, #b260ff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 2rem;
-    }
-
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        position: relative;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-        background: rgba(94, 218, 232, 0.15);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 32px rgba(94, 218, 232, 0.4);
-        border: 1px solid rgba(94, 218, 232, 0.3);
-    }
-
-    .nav-links a.active {
-        background: linear-gradient(135deg, rgba(94, 218, 232, 0.2), rgba(178, 96, 255, 0.2));
-        box-shadow: 0 12px 40px rgba(94, 218, 232, 0.6);
-        border: 1px solid rgba(94, 218, 232, 0.5);
-    }
-
-    .nav-links a.active::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        background: linear-gradient(135deg, #5edae8, #b260ff);
-        border-radius: 10px;
-        z-index: -1;
-        opacity: 0.3;
-        animation: glow 2s ease-in-out infinite alternate;
-    }
-
-=======
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(15, 18, 20, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #b8e6d3;
+    box-shadow: 0 2px 20px rgba(72, 187, 120, 0.1);
 }
 
 .logo-text {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: #2d4a3d;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    color: #48bb78;
 }
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .nav-links a {
-    color: white;
+    color: #2d4a3d;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 0.7rem 1.2rem;
+    border-radius: 25px;
     transition: all 0.3s ease;
+    font-weight: 500;
+    border: 2px solid transparent;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
+.nav-links a:hover {
+    background: rgba(72, 187, 120, 0.1);
+    border-color: #b8e6d3;
+    transform: translateY(-1px);
 }
->>>>>>> 13dadc4 (Reorganized the files)
-/* Settings Page Styling Fixes */
+
+.nav-links a.active {
+    background: #48bb78;
+    color: white;
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+/* Main Content Container - Fixed */
+.main-content-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 2rem 80px 2rem;
+    box-sizing: border-box;
+}
+
+/* Settings Section - Fixed */
 .settings-section {
-  width: 100%;
-  max-width: 600px;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  margin: 0 auto;
-  animation: fadeInUp 0.5s ease forwards;
+    width: 100%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(72, 187, 120, 0.15);
+    margin: 0 auto;
+    animation: fadeInUp 0.5s ease forwards;
+    border: 1px solid rgba(72, 187, 120, 0.2);
 }
 
 .settings-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  background: linear-gradient(135deg, #5edae8, #b260ff);
-  -webkit-background-clip: text;
-  color: transparent;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #2d4a3d;
+    font-weight: 700;
 }
 
-/* Checkbox styling */
-.form-group input[type="checkbox"] {
-  margin-right: 0.5rem;
-  transform: scale(1.1);
-}
-
-/* Danger Zone */
-.danger-zone {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1rem;
-  margin-top: 2rem;
-}
-
-.danger-btn {
-  background: #ff4d4d;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-
-.danger-btn:hover {
-  background: #ff1a1a;
-}
-
-.save-btn {
-  background: linear-gradient(135deg, #5edae8, #b260ff);
-  color: white;
-  padding: 0.9rem 1.5rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 1rem;
-  transition: background 0.3s ease;
-}
-
-.save-btn:hover {
-  background: rgb(68, 160, 68);
-}
-
-
-
-
-/* Main Content */
-.main-content {
-  width: 400px;
-  padding: 2rem;
-  background: rgba(15, 18, 20, 0.5);
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.main-content-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  min-height: 100vh;
-  padding-top: 120px; /* leave space for navbar */
-  padding-bottom: 80px; /* leave space for footer */
-  overflow-y: auto;
-  flex-direction: column;
-}
-
-
-
+/* Form Groups */
 .form-group {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #ffffff;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2d4a3d;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"],
+.form-group input[type="file"],
 .form-group select {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  border: 1px solid #5edae8;
-  border-radius: 8px;
-  background-color: #0f1214;
-  color: #ffffff;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 2px solid #b8e6d3;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #2d4a3d;
+    transition: all 0.3s ease;
 }
 
 .form-group input[type="text"]:focus,
 .form-group input[type="email"]:focus,
 .form-group input[type="password"]:focus,
+.form-group input[type="file"]:focus,
 .form-group select:focus {
-  border-color: #b260ff;
-  box-shadow: 0 0 8px rgba(94, 218, 232, 0.6);
+    border-color: #48bb78;
+    box-shadow: 0 0 8px rgba(72, 187, 120, 0.3);
+    outline: none;
 }
 
-.form-group select {
-  padding: 0.5rem;
+/* Checkbox styling */
+.form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+    transform: scale(1.2);
+    accent-color: #48bb78;
 }
 
+.form-group label:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
 
+/* Activity section */
+.form-group p {
+    margin: 0.5rem 0;
+    color: #2d4a3d;
+    font-size: 0.95rem;
+}
+
+/* Save button */
+.save-btn {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.save-btn:hover {
+    background: linear-gradient(135deg, #38a169, #2f855a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+}
+
+/* Danger Zone */
+.danger-zone {
+    border-top: 2px solid rgba(255, 77, 77, 0.2);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+}
+
+.danger-btn {
+    background: linear-gradient(135deg, #ff4d4d, #e53e3e);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+}
+
+.danger-btn:hover {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 77, 77, 0.4);
+}
 
 /* Footer */
 footer {
@@ -285,14 +235,15 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(15, 18, 20, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     padding: 1rem 2rem;
     text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 2px solid #b8e6d3;
     z-index: 99;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #2d4a3d;
+    box-shadow: 0 -2px 20px rgba(72, 187, 120, 0.1);
 }
 
 /* Responsive Styles */
@@ -302,17 +253,17 @@ footer {
     }
     
     .nav-links {
-        display: none; /* Hide on small screens */
+        display: none;
     }
     
+    .main-content-container {
+        padding: 100px 1rem 80px 1rem;
+    }
     
-    
-    .main-content {
-        margin-left: 220px;
+    .settings-section {
         padding: 1.5rem;
     }
 }
-
 
 /* Animations */
 @keyframes fadeInUp {

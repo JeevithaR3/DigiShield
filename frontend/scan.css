@@ -688,7 +688,8 @@ footer {
     .overview-main {
         margin-left: 180px;
         padding: 1rem;
-    }}
+    }
+}
 /* Animations */
 @keyframes pulse {
     0%, 100% {

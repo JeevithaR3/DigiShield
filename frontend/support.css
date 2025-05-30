@@ -3,42 +3,38 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    /* Changed font to 'Inter' as requested */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    /* Added transition for smooth effects globally */
+    transition: all 0.3s ease;
 }
 
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow-x: hidden;
-    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scroll */
     scroll-behavior: smooth;
-}
-
-a:focus, button:focus {
-    outline: 2px solid #5edae8;
-    outline-offset: 2px;
 }
 
 body {
     background: linear-gradient(135deg,
-        #0a0c0e 0%,
-        #0d1420 25%,
-        #0f0a1e 50%,
-        #0c0613 75%,
-        #0a0c0e 100%);
-    color: #ffffff;
+        #f8fffe 0%,
+        #f0f9f7 25%,
+        #e8f5f0 50%,
+        #f2f8f5 75%,
+        #fafffe 100%);
+    color: #2d4a3d; /* This is the base text color */
     min-height: 100vh;
-    overflow-x: hidden;
     line-height: 1.6;
+    display: flex; /* Enable flexbox for overall layout */
+    flex-direction: row; /* Navbar and Sidebar are fixed, main content is beside sidebar */
+}
 
-    /* --- IMPORTANT CHANGES FOR FOOTER FIX --- */
-    display: flex; /* Make body a flex container */
-    flex-direction: column; /* Stack children (navbar, sidebar, main, footer) vertically */
-    /* Add padding to the body to account for fixed navbar and sidebar */
-    padding-top: 60px; /* Height of the navbar */
-    padding-left: 280px; /* Width of the sidebar */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+/* Accessibility focus styles */
+a:focus, button:focus {
+    outline: 3px solid #48bb78;
+    outline-offset: 2px;
 }
 
 /* Navbar */
@@ -48,156 +44,164 @@ body {
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(15, 18, 20, 0.95);
+    background: rgba(255, 255, 255, 0.95); /* Lighter background */
     backdrop-filter: blur(12px);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #b8e6d3; /* New border color */
+    box-shadow: 0 2px 20px rgba(72, 187, 120, 0.1); /* New shadow */
+    height: 80px; /* Adjusted height to match your new sidebar top offset */
 }
 
 .logo-text {
-    font-size: 1.5rem;
+    font-size: 1.6rem; /* Slightly larger */
     font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    gap: 0.7rem; /* Increased gap */
+    color: #2d4a3d; /* Solid color, not gradient */
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    color: #48bb78; /* Green icon */
 }
 
 .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1rem; /* Smaller gap for top nav links */
 }
 
 .nav-links a {
-    color: white;
+    color: #2d4a3d; /* Text color for nav links */
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 0.7rem 1.2rem; /* Adjusted padding */
+    border-radius: 25px; /* More rounded */
     transition: all 0.3s ease;
-    position: relative;
+    font-weight: 500;
+    border: 2px solid transparent; /* Transparent border for hover effect */
 }
 
-.nav-links a:hover,
+.nav-links a:hover {
+    background: rgba(72, 187, 120, 0.1); /* Lighter hover background */
+    border-color: #b8e6d3;
+    transform: translateY(-1px);
+}
+
 .nav-links a.active {
-    background: rgba(94, 218, 232, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(94, 218, 232, 0.4);
-    border: 1px solid rgba(94, 218, 232, 0.3);
+    background: #48bb78; /* Solid green active background */
+    color: white;
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
 }
 
 /* Sidebar */
 .dashboard-sidebar {
     position: fixed;
     left: 0;
-    top: 60px; /* Offset for navbar */
-    width: 280px;
-    height: calc(100% - 60px);
-    background: rgba(15, 18, 20, 0.85);
+    top: 80px; /* Position below the navbar */
+    width: 280px; /* Fixed width for the sidebar */
+    height: calc(100vh - 80px); /* Full height minus navbar height */
+    background: rgba(255, 255, 255, 0.9); /* Lighter background */
     backdrop-filter: blur(20px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 2px solid #e8f5f0; /* New border */
     display: flex;
     flex-direction: column;
     padding: 2rem 1.5rem;
-    box-shadow: inset -3px 0 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 0 20px rgba(72, 187, 120, 0.08); /* New shadow */
     z-index: 99;
 }
 
 .dashboard-sidebar a {
-    color: rgba(255, 255, 255, 0.85);
+    color: #2d4a3d; /* Sidebar link color */
     text-decoration: none;
-    padding: 0.75rem 1.3rem;
-    border-radius: 12px;
-    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-radius: 15px; /* More rounded */
+    font-weight: 500;
     font-size: 1rem;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     transition: all 0.3s ease;
-    margin-bottom: 0.8rem;
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 2px solid transparent;
 }
 
 .sidebar-icon-container {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
+    background: linear-gradient(135deg, #48bb78, #38a169); /* Green gradient */
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(72, 187, 120, 0.2);
 }
 
 .sidebar-icon {
     color: white;
+    font-size: 1.1rem;
 }
 
-.dashboard-sidebar a:hover,
+.dashboard-sidebar a:hover {
+    background: rgba(72, 187, 120, 0.1);
+    border-color: #b8e6d3;
+    transform: translateX(5px);
+}
+
+.dashboard-sidebar a:hover .sidebar-icon-container {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
 .dashboard-sidebar a.active {
-    background: rgba(94, 218, 232, 0.15);
-    color: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 0 12px rgba(94, 218, 232, 0.4);
+    background: rgba(72, 187, 120, 0.15);
+    border-color: #48bb78;
+    border-left: 4px solid #48bb78;
 }
 
-.dashboard-sidebar a.active {
-    background: linear-gradient(135deg, rgba(94, 218, 232, 0.2), rgba(178, 96, 255, 0.2));
-    border-left: 3px solid #5edae8;
-}
-
-/* --- Support Container --- */
+/* Support Container (Main Content Area) */
+/* Renamed from .main-content to .support-container to match your HTML */
 .support-container {
-    /* Removed margin-left and margin-top because body padding now handles offsets */
-    /* Removed position, left, transform as flexbox handles centering */
-    padding: 2rem; /* Keep existing internal padding */
-    flex-grow: 1; /* Make this element take up all available vertical space */
-    min-height: calc(100vh - 60px); /* Ensures it's at least viewport height minus navbar */
-    animation: fadeInUp 0.6s ease-out;
-
-    /* Flexbox for internal content centering */
+    margin-left: 280px; /* Offset for the sidebar */
+    margin-top: 80px; /* Offset for the navbar */
+    padding: 2rem;
+    flex-grow: 1; /* Allows it to take remaining horizontal space */
+    width: calc(100% - 280px); /* Full width minus sidebar width */
+    max-width: 1200px; /* Max width for better readability on large screens */
+    animation: fadeInUp 0.6s ease-out; /* Keeping previous animation */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers content horizontally within support-container */
-
-    /* Max width for the actual content */
-    max-width: 1000px; /* Limit the width of the content inside */
-    width: 100%; /* Make it fill its parent up to max-width */
+    align-items: center; /* Center content horizontally within the container */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
-/* Removed specific centering for large screens, as flexbox handles it */
-/* @media (min-width: 1200px) { ... } is no longer needed */
-
-
+/* PAGE HEADER styles (copied from your old CSS for support.html, adjusted colors) */
 .page-header {
     text-align: center;
     margin-bottom: 3rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.9); /* Lighter background */
     backdrop-filter: blur(14px);
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border: 2px solid #e8f5f0; /* New border */
+    box-shadow: 0 8px 24px rgba(72, 187, 120, 0.1); /* New shadow */
     animation: fadeInScale 0.6s ease forwards;
-    width: 100%; /* Ensure it spans the full width of its parent (support-container) */
-    box-sizing: border-box; /* Include padding in width */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .page-title {
     font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
+    background: linear-gradient(135deg, #48bb78, #38a169); /* Green gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 0 10px rgba(94, 218, 232, 0.5);
+    text-shadow: 0 0 10px rgba(72, 187, 120, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -206,32 +210,8 @@ body {
 
 .page-subtitle {
     font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #4a6b5a; /* Darker grey color */
     margin-top: 1rem;
-}
-
-/* Status Indicator */
-.status-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    border-radius: 12px;
-    color: #4ade80;
-    width: 100%; /* Ensure it spans the full width of its parent */
-    box-sizing: border-box;
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #4ade80;
-    animation: pulse 2s infinite;
 }
 
 /* Support Grid */
@@ -240,24 +220,25 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
-    width: 100%; /* Ensure it spans the full width of its parent */
+    width: 100%;
     box-sizing: border-box;
+    justify-content: center;
 }
 
 .support-section {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.9); /* Lighter background */
     border-radius: 20px;
     padding: 2rem;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid #e8f5f0; /* New border */
     transition: all 0.3s ease;
-    /* Removed grid-column: span 2; as auto-fit handles layout */
+    box-shadow: 0 8px 25px rgba(72, 187, 120, 0.08);
 }
 
 .support-section:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(94, 218, 232, 0.2);
-    border-color: rgba(94, 218, 232, 0.3);
+    box-shadow: 0 20px 40px rgba(72, 187, 120, 0.2);
+    border-color: #b8e6d3;
 }
 
 .section-header {
@@ -265,14 +246,14 @@ body {
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
-    justify-content: center; /* Center header content */
+    justify-content: center;
 }
 
 .section-icon {
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
+    background: linear-gradient(135deg, #48bb78, #38a169); /* Green gradient */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -283,33 +264,33 @@ body {
 .section-title {
     font-size: 1.8rem;
     font-weight: 600;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
+    background: linear-gradient(135deg, #48bb78, #38a169); /* Green gradient */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 0 8px rgba(94, 218, 232, 0.4);
+    text-shadow: 0 0 8px rgba(72, 187, 120, 0.4);
 }
 
 /* FAQ Section */
 .faq-item {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(72, 187, 120, 0.03); /* Lighter green tint */
     border-radius: 12px;
     margin-bottom: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid #b8e6d3; /* New border */
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
 .faq-item:hover {
-    box-shadow: 0 8px 20px rgba(94, 218, 232, 0.1);
-    border-color: rgba(94, 218, 232, 0.15);
+    box-shadow: 0 8px 20px rgba(72, 187, 120, 0.1);
+    border-color: #81c784;
 }
 
 .faq-question {
     padding: 1.2rem;
     background: none;
     border: none;
-    color: white;
+    color: #2d4a3d; /* Darker text for question */
     font-weight: 500;
     cursor: pointer;
     width: 100%;
@@ -321,7 +302,7 @@ body {
 }
 
 .faq-question:hover {
-    background: rgba(94, 218, 232, 0.05);
+    background: rgba(72, 187, 120, 0.05);
 }
 
 .faq-answer {
@@ -329,11 +310,11 @@ body {
     max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease;
-    color: rgba(255, 255, 255, 0.8);
+    color: #4a6b5a; /* Lighter text for answer */
 }
 
 .faq-item.active .faq-answer {
-    max-height: 200px;
+    max-height: 200px; /* Adjust as needed for content */
     padding: 0 1.2rem 1.2rem;
 }
 
@@ -355,34 +336,34 @@ body {
 }
 
 .form-label {
-    color: rgba(255, 255, 255, 0.9);
+    color: #2d4a3d; /* Darker text for labels */
     font-weight: 500;
 }
 
 .form-input,
 .form-textarea,
 .form-select {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(72, 187, 120, 0.05); /* Lighter green tint */
+    border: 1px solid #b8e6d3; /* New border */
     border-radius: 12px;
     padding: 0.8rem 1rem;
-    color: white;
+    color: #2d4a3d; /* Darker text for input */
     font-family: inherit;
     transition: all 0.3s ease;
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #81c784; /* Lighter placeholder color */
 }
 
 .form-input:focus,
 .form-textarea:focus,
 .form-select:focus {
     outline: none;
-    border-color: #5edae8;
-    box-shadow: 0 0 0 3px rgba(94, 218, 232, 0.1);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: #48bb78;
+    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.2);
+    background: rgba(72, 187, 120, 0.08);
 }
 
 .form-textarea {
@@ -391,7 +372,7 @@ body {
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #5edae8, #b260ff);
+    background: linear-gradient(135deg, #48bb78, #38a169); /* Green gradient */
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -400,7 +381,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(94, 218, 232, 0.3);
+    box-shadow: 0 8px 32px rgba(72, 187, 120, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -409,79 +390,29 @@ body {
 
 .submit-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(94, 218, 232, 0.4);
-}
-
-/* Quick Actions */
-.quick-actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-    width: 100%; /* Ensure it spans the full width of its parent */
-    box-sizing: border-box;
-}
-
-.action-card {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.action-card:hover {
-    transform: translateY(-3px);
-    background: rgba(94, 218, 232, 0.05);
-    border-color: rgba(94, 218, 232, 0.3);
-    box-shadow: 0 12px 32px rgba(94, 218, 232, 0.2);
-}
-
-.action-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #5edae8, #b260ff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 1.5rem;
-    color: white;
-}
-
-.action-title {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: white;
-}
-
-.action-description {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
+    box-shadow: 0 12px 40px rgba(72, 187, 120, 0.4);
 }
 
 /* Emergency Contact Section */
 .emergency-contact-section {
-    background: rgba(255, 45, 85, 0.1); /* Reddish background for urgency */
+    background: rgba(255, 45, 85, 0.1); /* Keep red for emergency */
     border-radius: 20px;
     padding: 2rem;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 45, 85, 0.3);
     transition: all 0.3s ease;
-    text-align: center; /* Center content within this section */
-    width: 100%; /* Ensure it spans the full width of its parent */
+    text-align: center;
+    width: 100%;
     box-sizing: border-box;
+    box-shadow: 0 8px 25px rgba(255, 45, 85, 0.1); /* Shadow for emergency */
 }
 
 .emergency-contact-section .section-icon {
-    background: linear-gradient(135deg, #ff4d4d, #cc0000); /* Red gradient for icon */
+    background: linear-gradient(135deg, #ff4d4d, #cc0000); /* Keep red for emergency */
 }
 
 .emergency-contact-section .section-title {
-    background: linear-gradient(135deg, #ff6b6b, #ff0000); /* Red gradient for title */
+    background: linear-gradient(135deg, #ff6b6b, #ff0000); /* Keep red for emergency */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -489,7 +420,7 @@ body {
 }
 
 .emergency-contact-section p {
-    color: rgba(255, 255, 255, 0.9);
+    color: #4a6b5a; /* Adjusted text color for emergency section */
     margin-bottom: 1rem;
 }
 
@@ -510,20 +441,21 @@ body {
     box-shadow: 0 10px 25px rgba(255, 45, 85, 0.6);
 }
 
-
-/* Footer Styles */
-footer {
-    /* Removed position: relative; bottom: 0; margin-top: auto; */
-    width: 100%; /* Ensure it spans the full width */
-    padding: 1.5rem 0;
+/* Success Message Styles */
+.success-message {
+    background: rgba(72, 187, 120, 0.1);
+    border: 1px solid #b8e6d3;
+    border-radius: 12px;
+    padding: 1rem;
+    color: #48bb78;
     text-align: center;
-    background: rgba(15, 18, 20, 0.9);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
-    z-index: 10;
-    /* Add padding-left to align with main content, compensating for sidebar */
-    padding-left: 280px;
-    box-sizing: border-box;
+    margin-bottom: 1rem;
+    display: none;
+}
+
+.success-message.show {
+    display: block;
+    animation: fadeInUp 0.5s ease;
 }
 
 /* Animations */
@@ -558,100 +490,68 @@ footer {
     }
 }
 
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem 1.5rem;
+        height: auto; /* Allow navbar height to adjust */
     }
 
     .nav-links {
-        display: none;
+        display: none; /* Hide top nav links on smaller screens */
     }
 
+    /* Sidebar becomes horizontal and at the top */
     .dashboard-sidebar {
         width: 100%;
         height: auto;
-        position: relative; /* Change to relative for mobile */
-        top: 0;
+        top: 80px; /* Stay below the navbar */
+        position: relative; /* Remove fixed position for mobile */
         border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1rem 1rem;
-        flex-direction: row;
-        justify-content: space-around;
-        flex-wrap: wrap;
+        padding: 1rem;
+        flex-direction: row; /* Layout items horizontally */
+        flex-wrap: wrap; /* Allow items to wrap */
+        justify-content: center; /* Center items in the row */
+        gap: 0.5rem; /* Smaller gap for horizontal layout */
+        box-shadow: 0 4px 10px rgba(72, 187, 120, 0.05); /* Lighter shadow for horizontal sidebar */
     }
 
     .dashboard-sidebar a {
-        flex-basis: 45%;
-        margin-bottom: 0.5rem;
-        justify-content: center;
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+        gap: 0.5rem;
+        flex-direction: column; /* Stack icon and text */
         text-align: center;
-        padding: 0.8rem 0.5rem;
-    }
-    .dashboard-sidebar a .sidebar-icon-container {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.5rem; /* Reduce bottom margin */
+        flex-basis: auto; /* Allow items to take natural width */
     }
 
-    /* Adjust body padding for mobile */
-    body {
-        padding-top: 60px; /* Keep for navbar */
-        padding-left: 0; /* Remove sidebar padding on mobile */
-        flex-direction: column; /* Ensure vertical stack on mobile */
+    .sidebar-icon-container {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
     }
 
+    /* Main content adjusts for the new sidebar position */
     .support-container {
-        /* Reset any conflicting desktop positioning */
-        margin-left: 0;
-        margin-top: 0;
-        padding: 1.5rem;
-        max-width: 100%;
+        margin-left: 0; /* Remove sidebar offset */
+        margin-top: 0; /* Remove navbar offset, as sidebar is now relative */
         width: 100%;
-        left: 0;
-        transform: none;
-        align-items: stretch; /* Allow internal content to stretch */
+        padding: 1.5rem;
+        order: 1; /* Place support container after sidebar in flex flow */
     }
 
     .page-title {
         font-size: 2rem;
     }
 
-    .quick-actions {
-        grid-template-columns: 1fr; /* Single column for quick actions */
-    }
-
-    .support-grid {
-        grid-template-columns: 1fr; /* Single column for main sections */
-    }
-
-    .emergency-contact-section {
-        order: 1; /* Place it first or last if needed on mobile */
-    }
-
-    /* Footer on mobile */
-    footer {
-        padding-left: 0; /* No sidebar on mobile */
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-text {
-        font-size: 1.3rem;
-    }
-
-    .page-title {
-        font-size: 1.8rem;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
     .page-subtitle {
         font-size: 1rem;
     }
 
-    .support-container {
-        padding: 1rem;
+    .support-grid {
+        grid-template-columns: 1fr; /* Stack sections vertically */
+        gap: 1.5rem; /* Smaller gap for stacked items */
     }
 
     .support-section {
@@ -661,13 +561,68 @@ footer {
     .section-title {
         font-size: 1.5rem;
     }
+}
 
-    .faq-question {
-        font-size: 0.95rem;
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.8rem 1rem;
     }
 
-    .form-input, .form-textarea, .form-select, .submit-btn {
+    .logo-text {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-sidebar {
+        padding: 0.5rem;
+        gap: 0.3rem;
+    }
+
+    .dashboard-sidebar a {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    .sidebar-icon-container {
+        width: 25px;
+        height: 25px;
         font-size: 0.9rem;
-        padding: 0.7rem;
+    }
+
+    .support-container {
+        padding: 0.8rem;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .support-section {
+        padding: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .faq-question {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .faq-answer {
+        font-size: 0.85rem;
+        padding: 0 1rem 1rem;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select,
+    .submit-btn {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
     }
 }
