@@ -4,43 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIGISHIELD - AI Protection for Children Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="landing.css">
 </head>
 <body>
+
     <canvas id="bg-canvas"></canvas>
     <div class="gradient-overlay"></div>
-    <div class="bg-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-    <!-- ...existing content... -->
-    <div class="container">
-        <nav class="navbar">
-            <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
-            <div class="nav-links">
-                <a href="dashboard.html">Dashboard</a>
-                <a href="alerts.html">Alerts</a>
-                <a href="flagged.html">Flagged</a>
-                <a href="settings.html">Settings</a>
-            </div>
-        </nav>
 
+    <div class="container">
+        <!-- Hero Section -->
         <div class="hero">
+            <div class="logo">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">DIGI SHIELD</span>
+            </div>
             <h1>AI Protection for Children in the Digital World</h1>
             <div class="subtitle">DIGISHIELD uses advanced AI technology to create a safe online environment for children. Smart protection against inappropriate content, cyberbullying, and online threats.</div>
             <div class="cta-container">
                 <a href="login_signup.html" class="cta-button primary-cta">Get Started</a>
-            
+                <a href="#features" class="cta-button secondary-cta">Learn More</a>
             </div>
         </div>
 
-        <div class="features">
+        <!-- Features Section -->
+        <section id="features" class="features">
             <div class="feature">
                 <div class="feature-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" fill="white"/>
+                        <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" fill="currentColor"/>
                     </svg>
                 </div>
                 <h3>AI-Powered Protection</h3>
@@ -49,7 +41,7 @@
             <div class="feature">
                 <div class="feature-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="white"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="currentColor"/>
                     </svg>
                 </div>
                 <h3>Real-time Monitoring</h3>
@@ -58,21 +50,54 @@
             <div class="feature">
                 <div class="feature-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="white"/>
+                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
                     </svg>
                 </div>
                 <h3>Child-Friendly Design</h3>
                 <p>Create safe digital boundaries without limiting your child's exploration and learning.</p>
             </div>
-        </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="how-it-works">
+            <h2>How DigiShield Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up</h3>
+                    <p>Create your account and set up profiles for your children.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Install Protection</h3>
+                    <p>Download and install our AI-powered protection tools.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Stay Protected</h3>
+                    <p>Monitor activity and receive real-time alerts about potential threats.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Started Section -->
+        <section class="get-started">
+            <h2>Ready to Protect Your Children Online?</h2>
+            <p>Join thousands of parents who trust DigiShield to keep their children safe in the digital world.</p>
+            <a href="login_signup.html" class="cta-button primary-cta">Get Started Now</a>
+        </section>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="three.js"></script>
-
     <footer>
-        <p>DigiShield &copy; 2025. Protecting Children Online</p>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">DIGI SHIELD</span>
+            </div>
+            <p>Protecting Children Online &copy; 2025</p>
+        </div>
     </footer>
+
+
 </body>
 </html>
