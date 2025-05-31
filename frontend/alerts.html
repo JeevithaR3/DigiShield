@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,34 +48,46 @@
         <main class="main-content">
             <h2>Alerts</h2>
             <section class="alerts-list">
-                <section class="alerts-list">
-                  <ul>
-                    <li>
-                      <span class="alert-badge warning">Warning</span>
-                      <strong>Type:</strong> Suspicious Link<br>
-                      <strong>Message:</strong> "Check out this cool site: bit.ly/xyz123"<br>
-                      <strong>Time:</strong> 10:32 AM, Today<br>
-                      <strong>Description:</strong> This link has been flagged as suspicious by our system.
-                      <button class="alert-action">Dismiss</button>
-                    </li>
-                    <li>
-                      <span class="alert-badge error">Error</span>
-                      <strong>Type:</strong> Inappropriate Language<br>
-                      <strong>Message:</strong> "You're so dumb!"<br>
-                      <strong>Time:</strong> 9:50 AM, Today<br>
-                      <strong>Description:</strong> This message contains language that is not suitable for all audiences.
-                      <button class="alert-action">View details</button>
-                    </li>
-                    <li>
-                      <span class="alert-badge info">Info</span>
-                      <strong>Type:</strong> Personal Info Request<br>
-                      <strong>Message:</strong> "What's your address?"<br>
-                      <strong>Time:</strong> 8:15 AM, Today<br>
-                      <strong>Description:</strong> This message is requesting personal information.
-                      <button class="alert-action">Respond</button>
-                    </li>
-                  </ul>
-                </section>
+                
+                <div class="alert-card">
+                    <div class="alert-header">
+                        <span class="alert-badge warning">Warning</span>
+                        <button class="alert-action">Dismiss</button>
+                    </div>
+                    <div class="alert-details">
+                        <strong>Type:</strong> Suspicious Link<br>
+                        <strong>Message:</strong> "Check out this cool site: bit.ly/xyz123"<br>
+                        <strong>Time:</strong> 10:32 AM, Today<br>
+                        <strong>Description:</strong> This link has been flagged as suspicious by our system.
+                    </div>
+                </div>
+                
+                <div class="alert-card">
+                    <div class="alert-header">
+                        <span class="alert-badge error">Error</span>
+                        <button class="alert-action">View details</button>
+                    </div>
+                    <div class="alert-details">
+                        <strong>Type:</strong> Inappropriate Language<br>
+                        <strong>Message:</strong> "You're so dumb!"<br>
+                        <strong>Time:</strong> 9:50 AM, Today<br>
+                        <strong>Description:</strong> This message contains language that is not suitable for all audiences.
+                    </div>
+                </div>
+                
+                <div class="alert-card">
+                    <div class="alert-header">
+                        <span class="alert-badge info">Info</span>
+                        <button class="alert-action">Respond</button>
+                    </div>
+                    <div class="alert-details">
+                        <strong>Type:</strong> Personal Info Request<br>
+                        <strong>Message:</strong> "What's your address?"<br>
+                        <strong>Time:</strong> 8:15 AM, Today<br>
+                        <strong>Description:</strong> This message is requesting personal information.
+                    </div>
+                </div>
+                
             </section>
         </main>
     </div>
