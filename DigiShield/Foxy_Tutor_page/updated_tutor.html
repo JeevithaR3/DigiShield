@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foxy's Cyber Safety Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 150, 136, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 150, 136, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 150, 136, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 136, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            color: #00695C;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 150, 136, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #004D40;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-message {
+            font-size: 1.1rem;
+            color: #00695C;
+            background: linear-gradient(135deg, #E0F2F1, #B2DFDB);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #00BCD4;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+        }
+
+        .xp-container {
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .xp-label {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .xp-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA000);
+            width: 0%;
+            transition: width 0.8s ease;
+            border-radius: 4px;
+        }
+
+        .xp-text {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .badges-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 150, 136, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 150, 136, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .badges-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00695C;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .badges-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .badge-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #E0E0E0, #BDBDBD);
+            transition: all 0.3s ease;
+            border: 2px solid #E0E0E0;
+        }
+
+        .badge-item.earned {
+            background: linear-gradient(135deg, #FFD700, #FFA000);
+            border-color: #FF8F00;
+            animation: badgeGlow 2s ease-in-out infinite;
+        }
+
+        .badge-item.master {
+            width: 80px;
+            height: 80px;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #FF6B35, #FF8E53);
+            border-color: #FF4500;
+            border-width: 3px;
+        }
+
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+
+        .foxy-container {
+            position: fixed;
+            top: 120px;
+            right: 50px;
+            z-index: 1000;
+            animation: foxyFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes foxyFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .foxy {
+            width: 120px;
+            height: 140px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .foxy-body {
+            width: 80px;
+            height: 90px;
+            background: linear-gradient(145deg, #FF6B35, #FF8E53);
+            border-radius: 50% 50% 45% 45%;
+            position: absolute;
+            top: 30px;
+            left: 20px;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .foxy-head {
+            width: 70px;
+            height: 60px;
+            background: linear-gradient(145deg, #FF6B35, #FF8E53);
+            border-radius: 50% 50% 40% 40%;
+            position: absolute;
+            top: 0;
+            left: 25px;
+            box-shadow: 0 3px 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .foxy-ear {
+            width: 20px;
+            height: 25px;
+            background: linear-gradient(145deg, #FF6B35, #FF4500);
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: -10px;
+        }
+
+        .foxy-ear.left { left: 10px; transform: rotate(-20deg); }
+        .foxy-ear.right { right: 10px; transform: rotate(20deg); }
+
+        .foxy-ear-inner {
+            width: 8px;
+            height: 10px;
+            background: #FFB6C1;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: 3px;
+            left: 6px;
+        }
+
+        .foxy-eyes {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            width: 40px;
+            height: 20px;
+        }
+
+        .foxy-eye {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .foxy-eye.left { left: 0; }
+        .foxy-eye.right { right: 0; }
+
+        .foxy-pupil {
+            width: 8px;
+            height: 8px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: all 0.1s ease;
+        }
+
+        .foxy-nose {
+            width: 8px;
+            height: 6px;
+            background: #333;
+            border-radius: 50% 50% 50% 50%;
+            position: absolute;
+            top: 35px;
+            left: 31px;
+        }
+
+        .foxy-mouth {
+            width: 20px;
+            height: 10px;
+            border: 2px solid #333;
+            border-top: none;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            top: 40px;
+            left: 25px;
+        }
+
+        .foxy-tail {
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(145deg, #FF6B35, #FF4500);
+            border-radius: 50%;
+            position: absolute;
+            top: 70px;
+            right: -15px;
+            transform-origin: left center;
+            animation: tailWag 2s ease-in-out infinite;
+        }
+
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(15deg); }
+        }
+
+        .foxy-tail-tip {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            right: -5px;
+        }
+
+        .quests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .quest-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 150, 136, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quest-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+        }
+
+        .quest-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 150, 136, 0.15);
+            border-color: #00BCD4;
+        }
+
+        .quest-card.locked {
+            opacity: 0.6;
+            pointer-events: none;
+            background: rgba(200, 200, 200, 0.8);
+        }
+
+        .quest-card.completed {
+            border-color: #4CAF50;
+            background: rgba(232, 245, 233, 0.95);
+        }
+
+        .quest-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .quest-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00695C;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .quest-description {
+            color: #004D40;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .quest-progress {
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E0E0E0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .level-indicator {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: 600;
+            color: #00695C;
+        }
+
+        .quest-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .quest-button:hover {
+            background: linear-gradient(135deg, #0097A7, #00838F);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 151, 167, 0.4);
+        }
+
+        .quest-button:disabled {
+            background: #CCCCCC;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover { color: #333; }
+
+        .lesson-content {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #E0F2F1, #B2DFDB);
+            border-radius: 15px;
+            border-left: 5px solid #00BCD4;
+        }
+
+        .lesson-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00695C;
+            margin-bottom: 15px;
+        }
+
+        .lesson-text {
+            font-size: 1.1rem;
+            color: #004D40;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .audio-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #FF6B35, #FF8E53);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .question-container {
+            margin: 20px 0;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00695C;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #E0E0E0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .option:hover {
+            background: #E0F2F1;
+            border-color: #00BCD4;
+            transform: translateY(-2px);
+        }
+
+        .option.correct {
+            background: #C8E6C9;
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .option.incorrect {
+            background: #FFCDD2;
+            border-color: #F44336;
+            color: #C62828;
+        }
+
+        .next-level-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+            margin-top: 20px;
+        }
+
+        .next-level-btn:hover {
+            background: linear-gradient(135deg, #8BC34A, #9CCC65);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FFD700;
+            animation: confettiFall 3s linear forwards;
+            pointer-events: none;
+            z-index: 3000;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .badge-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #FFD700, #FFA000);
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            z-index: 3500;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.4);
+            animation: badgePopIn 0.6s ease;
+        }
+
+        @keyframes badgePopIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            80% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .badge-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: badgeSpin 1s ease-in-out;
+        }
+
+        @keyframes badgeSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .chatbox-toggle {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1500;
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .chatbox-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+        }
+
+        .chatbox-toggle span {
+            color: white;
+            font-size: 0.8rem;
+            margin: 1px 0;
+            text-align: center;
+            line-height: 1;
+            font-weight: 600;
+        }
+
+        .chatbox-toggle .icon {
+            font-size: 1.5rem;
+        }
+
+        .chatbox {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.15);
+            z-index: 1500;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            border: 2px solid #00BCD4;
+            border-bottom: none;
+            transition: height 0.3s ease;
+            overflow: hidden;
+        }
+
+        .chatbox.expanded {
+            height: 400px;
+        }
+
+        .chatbox-header {
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+            color: white;
+            padding: 15px;
+            border-radius: 18px 18px 0 0;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 30px;
+        }
+
+        .chatbox-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 280px;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            hyphens: auto;
+        }
+
+        .chat-message.user {
+            background: #E3F2FD;
+            color: #1976D2;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-message.foxy {
+            background: #FFF3E0;
+            color: #F57C00;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chatbox-input {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .chatbox-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #E0E0E0;
+            border-radius: 20px;
+            outline: none;
+            font-size: 0.9rem;
+            word-wrap: break-word;
+        }
+
+        .chatbox-input input:focus {
+            border-color: #00BCD4;
+        }
+
+        .chatbox-input button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .certificate {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #FFD700, #FFA000);
+            border-radius: 25px;
+            margin: 20px 0;
+            border: 5px solid #FF8F00;
+        }
+
+        .certificate-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.5rem;
+            color: #E65100;
+            margin-bottom: 20px;
+        }
+
+        .certificate-text {
+            font-size: 1.3rem;
+            color: #BF360C;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 2rem; }
+            .subtitle { font-size: 1.1rem; }
+            .stats { gap: 15px; }
+            .foxy-container { 
+                position: relative; 
+                top: auto; 
+                right: auto; 
+                text-align: center; 
+                margin: 20px 0; 
+            }
+            .quests-grid { 
+                grid-template-columns: 1fr; 
+                gap: 20px; 
+            }
+            .chatbox.expanded { 
+                height: 350px; 
+            }
+            .badges-display {
+                margin: 15px 10px;
+                padding: 10px;
+            }
+            .badges-grid {
+                gap: 10px;
+            }
+            .badge-item {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            .badge-item.master {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            .reset-container {
+                bottom: 80px;
+            }
+            .reset-button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🌟 Foxy's Magical Cyber Safety Adventure! 🌟</h1>
+            <p class="subtitle">Learn to stay safe online with your adorable fox guide!</p>
+            <div class="welcome-message">
+                💝 Welcome, brave explorer! Enter quests to learn about online safety and become a cyber hero! 💝
+            </div>
+            <div class="stats">
+                <div class="xp-container">
+                    <div class="xp-label">🚀 Adventure Progress</div>
+                    <div class="xp-progress">
+                        <div class="xp-fill" id="xpFill"></div>
+                    </div>
+                    <div class="xp-text" id="xpText">0 / 900 XP</div>
+                </div>
+                <div class="stat">🔥 Streak: <span id="streak">0</span> days</div>
+                <div class="stat">🎖️ Badges: <span id="badges">0</span>/10</div>
+            </div>
+        </div>
+
+        <!-- My Badges Display moved below stats -->
+        <div class="badges-display">
+            <div class="badges-title">🏆 My Badges</div>
+            <div class="badges-grid" id="badgesGrid"></div>
+        </div>
+
+        <div class="foxy-container">
+            <div class="foxy" onclick="foxySpeak()">
+                <div class="foxy-body"></div>
+                <div class="foxy-head">
+                    <div class="foxy-ear left">
+                        <div class="foxy-ear-inner"></div>
+                    </div>
+                    <div class="foxy-ear right">
+                        <div class="foxy-ear-inner"></div>
+                    </div>
+                    <div class="foxy-eyes">
+                        <div class="foxy-eye left">
+                            <div class="foxy-pupil" id="leftPupil"></div>
+                        </div>
+                        <div class="foxy-eye right">
+                            <div class="foxy-pupil" id="rightPupil"></div>
+                        </div>
+                    </div>
+                    <div class="foxy-nose"></div>
+                    <div class="foxy-mouth"></div>
+                </div>
+                <div class="foxy-tail">
+                    <div class="foxy-tail-tip"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quests-grid" id="questsGrid"></div>
+    </div>
+
+    <!-- Quest Modal -->
+    <div id="questModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Reset Button -->
+    <div class="reset-container">
+        <button class="reset-button" onclick="resetProgress()">
+            🔄 Take Quests with Foxy Again!
+        </button>
+    </div>
+
+    <!-- Chatbox Toggle -->
+    <div class="chatbox-toggle" onclick="toggleChatbox()">
+        <span class="icon">💬</span>
+        <span>ASK FOXY</span>
+        <span>ANYTHING</span>
+    </div>
+
+    <!-- Chatbox -->
+    <div class="chatbox" id="chatbox">
+        <div class="chatbox-header" onclick="toggleChatbox()">
+            🦊 Ask Foxy Anything! Click to expand/minimize
+        </div>
+        <div class="chatbox-messages" id="chatMessages">
+            <div class="chat-message foxy">
+                Hi there! I'm Foxy, your cyber safety guide! 🦊✨ Ask me anything about staying safe online!
+            </div>
+        </div>
+        <div class="chatbox-input">
+            <input type="text" id="chatInput" placeholder="Type your question..." onkeypress="handleChatEnter(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            xp: parseInt(localStorage.getItem('xp')) || 0,
+            streak: parseInt(localStorage.getItem('streak')) || 0,
+            badges: parseInt(localStorage.getItem('badges')) || 0,
+            completedQuests: JSON.parse(localStorage.getItem('completedQuests')) || {},
+            questProgress: JSON.parse(localStorage.getItem('questProgress')) || {},
+            currentLevel: JSON.parse(localStorage.getItem('currentLevel')) || {}
+        };
+
+        // Speech synthesis
+        let currentSpeech = null;
+
+        // Quest data with 3 levels each
+        const quests = [
+            {
+                id: 'passwords',
+                title: '🔐 Password Power',
+                description: 'Master the art of creating super strong passwords!',
+                icon: '🔐',
+                lesson: {
+                    title: 'Creating Strong Passwords',
+                    content: `A strong password is like a super-strong lock on your digital door! Here's how to make them awesome:
+
+• Use at least 8 characters (longer is stronger!)
+• Mix uppercase and lowercase letters
+• Add numbers and special symbols
+• Avoid using personal information like birthdays
+• Never use the same password everywhere
+• Consider using a passphrase like "Pizza4Breakfast!"
+
+Remember: Your password is the key to your digital kingdom - make it mighty!`
+                },
+                levels: [
+                    {
+                        question: "What makes a password strong?",
+                        options: ["Using your name", "At least 8 characters with mixed types", "Using '12345'", "Your birthday"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which password is strongest?",
+                        options: ["password123", "MyDog", "Tr0ub4dor&3", "12345678"],
+                        correct: 2
+                    },
+                    {
+                        question: "Should you use the same password everywhere?",
+                        options: ["Yes, it's easier", "No, each account should be unique", "Only for important sites", "It doesn't matter"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'phishing',
+                title: '🎣 Phishing Detective',
+                description: 'Learn to spot and avoid sneaky phishing attempts!',
+                icon: '🎣',
+                lesson: {
+                    title: 'Spotting Phishing Attempts',
+                    content: `Phishing is when bad actors try to trick you into giving away your personal information. Here's how to be a detective:
+
+• Check the sender's email address carefully
+• Look for spelling and grammar mistakes
+• Be suspicious of urgent messages asking for personal info
+• Hover over links to see where they really go
+• Never give passwords or personal info via email
+• When in doubt, contact the company directly
+
+Remember: Real companies won't ask for passwords via email!`
+                },
+                levels: [
+                    {
+                        question: "What is phishing?",
+                        options: ["A water sport", "Trying to trick people online", "A type of fish", "A computer game"],
+                        correct: 1
+                    },
+                    {
+                        question: "What should you do with suspicious emails?",
+                        options: ["Click all links", "Delete them", "Forward to friends", "Reply immediately"],
+                        correct: 1
+                    },
+                    {
+                        question: "How can you verify a suspicious email?",
+                        options: ["Click the links", "Contact the company directly", "Ignore it completely", "Forward it"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'privacy',
+                title: '🛡️ Privacy Guardian',
+                description: 'Protect your personal information like a pro!',
+                icon: '🛡️',
+                lesson: {
+                    title: 'Protecting Your Privacy',
+                    content: `Your personal information is precious! Here's how to guard it:
+
+• Never share full name, address, or phone number online
+• Use privacy settings on social media
+• Think before you post - the internet remembers everything
+• Be careful about what photos you share
+• Don't accept friend requests from strangers
+• Keep your location private
+
+Remember: Once something is online, it can stay there forever!`
+                },
+                levels: [
+                    {
+                        question: "What information should you keep private?",
+                        options: ["Your favorite color", "Your address and phone number", "Your pet's name", "Your favorite food"],
+                        correct: 1
+                    },
+                    {
+                        question: "What should you do before posting a photo?",
+                        options: ["Post immediately", "Think about who might see it", "Add your location", "Tag everyone"],
+                        correct: 1
+                    },
+                    {
+                        question: "Should you accept friend requests from strangers?",
+                        options: ["Yes, always", "No, never", "Only if they seem nice", "It doesn't matter"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'cyberbullying',
+                title: '💝 Kindness Champion',
+                description: 'Spread kindness and stop cyberbullying!',
+                icon: '💝',
+                lesson: {
+                    title: 'Preventing Cyberbullying',
+                    content: `The internet should be a kind place for everyone! Here's how to be a kindness champion:
+
+• Treat others online as you would in person
+• Never send mean messages or comments
+• Don't share embarrassing photos of others
+• Report bullying when you see it
+• Support friends who are being bullied
+• Think before you type - words can hurt
+
+Remember: Behind every screen is a real person with real feelings!`
+                },
+                levels: [
+                    {
+                        question: "What is cyberbullying?",
+                        options: ["Playing online games", "Being mean to others online", "Learning on computers", "Making friends online"],
+                        correct: 1
+                    },
+                    {
+                        question: "What should you do if you see cyberbullying?",
+                        options: ["Ignore it", "Join in", "Report it and help the victim", "Laugh about it"],
+                        correct: 2
+                    },
+                    {
+                        question: "How should you treat others online?",
+                        options: ["However you want", "The same as in real life", "Differently than real life", "It doesn't matter"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'downloads',
+                title: '⬇️ Download Detective',
+                description: 'Learn to safely download files and apps!',
+                icon: '⬇️',
+                lesson: {
+                    title: 'Safe Downloading',
+                    content: `Not all downloads are safe! Here's how to download safely:
+
+• Only download from trusted websites and app stores
+• Read reviews before downloading apps
+• Check permissions apps ask for
+• Never download from pop-up ads
+• Use antivirus software
+• Ask a grown-up if you're unsure
+
+Remember: When in doubt, don't download!`
+                },
+                levels: [
+                    {
+                        question: "Where should you download apps?",
+                        options: ["Any website", "Official app stores", "Pop-up ads", "Random emails"],
+                        correct: 1
+                    },
+                    {
+                        question: "What should you check before downloading?",
+                        options: ["Nothing", "Reviews and permissions", "File size only", "Download speed"],
+                        correct: 1
+                    },
+                    {
+                        question: "Should you download from pop-up ads?",
+                        options: ["Yes, always", "No, never", "Sometimes", "If they look official"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'wifi',
+                title: '📶 WiFi Warrior',
+                description: 'Connect to WiFi safely and securely!',
+                icon: '📶',
+                lesson: {
+                    title: 'WiFi Safety',
+                    content: `WiFi can be risky if you're not careful! Here's how to stay safe:
+
+• Avoid public WiFi for sensitive activities
+• Look for password-protected networks
+• Don't access banking or personal accounts on public WiFi
+• Turn off auto-connect features
+• Use a VPN when possible
+• Create strong passwords for your home WiFi
+
+Remember: Free WiFi might cost you your privacy!`
+                },
+                levels: [
+                    {
+                        question: "What should you avoid on public WiFi?",
+                        options: ["Checking weather", "Online banking", "Reading news", "Playing games"],
+                        correct: 1
+                    },
+                    {
+                        question: "What makes WiFi more secure?",
+                        options: ["Being free", "Having a password", "Fast speed", "Many users"],
+                        correct: 1
+                    },
+                    {
+                        question: "Should you auto-connect to any WiFi?",
+                        options: ["Yes, it's convenient", "No, choose carefully", "Only at home", "It doesn't matter"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'social',
+                title: '👥 Social Media Star',
+                description: 'Use social media safely and responsibly!',
+                icon: '👥',
+                lesson: {
+                    title: 'Social Media Safety',
+                    content: `Social media is fun, but safety comes first! Here's how to shine safely:
+
+• Set your profiles to private
+• Only connect with people you know in real life
+• Think before you share - is it appropriate?
+• Don't share your location constantly
+• Report inappropriate content
+• Take breaks from social media
+
+Remember: Your digital footprint follows you everywhere!`
+                },
+                levels: [
+                    {
+                        question: "How should you set your social media profiles?",
+                        options: ["Public for everyone", "Private", "Half public", "It doesn't matter"],
+                        correct: 1
+                    },
+                    {
+                        question: "Who should you connect with on social media?",
+                        options: ["Everyone who asks", "Only people you know", "Famous people only", "Random strangers"],
+                        correct: 1
+                    },
+                    {
+                        question: "Should you share your location constantly?",
+                        options: ["Yes, always", "No, it's risky", "Only on weekends", "Only with friends"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'gaming',
+                title: '🎮 Gaming Guardian',
+                description: 'Stay safe while gaming online!',
+                icon: '🎮',
+                lesson: {
+                    title: 'Online Gaming Safety',
+                    content: `Gaming is awesome, but stay safe while playing! Here's how:
+
+• Never share personal information with other players
+• Use the game's built-in voice chat when possible
+• Report players who are mean or inappropriate
+• Take breaks to rest your eyes and body
+• Play age-appropriate games
+• Tell a grown-up if someone makes you uncomfortable
+
+Remember: The game should be fun for everyone!`
+                },
+                levels: [
+                    {
+                        question: "What should you never share while gaming?",
+                        options: ["Your gaming skills", "Personal information", "Game strategies", "Favorite games"],
+                        correct: 1
+                    },
+                    {
+                        question: "What should you do if another player is mean?",
+                        options: ["Be mean back", "Report them", "Quit forever", "Ignore everything"],
+                        correct: 1
+                    },
+                    {
+                        question: "Who should you tell if someone makes you uncomfortable?",
+                        options: ["No one", "A trusted adult", "Other players", "The mean player"],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 'digital',
+                title: '⚖️ Digital Citizen',
+                description: 'Be a responsible digital citizen!',
+                icon: '⚖️',
+                lesson: {
+                    title: 'Digital Citizenship',
+                    content: `Being a good digital citizen means being responsible online! Here's how:
+
+• Respect others' work and don't plagiarize
+• Follow the rules of websites and apps
+• Be honest and truthful online
+• Help make the internet a better place
+• Respect copyright and intellectual property
+• Use technology to learn and create
+
+Remember: The internet is our shared space - let's keep it awesome!`
+                },
+                levels: [
+                    {
+                        question: "What does being a good digital citizen mean?",
+                        options: ["Doing whatever you want", "Being responsible online", "Using technology all day", "Ignoring rules"],
+                        correct: 1
+                    },
+                    {
+                        question: "Should you copy someone else's work without permission?",
+                        options: ["Yes, it's easy", "No, that's plagiarism", "Only sometimes", "If no one notices"],
+                        correct: 1
+                    },
+                    {
+                        question: "How can you help make the internet better?",
+                        options: ["Be mean to others", "Spread false information", "Be kind and respectful", "Break rules"],
+                        correct: 2
+                    }
+                ]
+            }
+        ];
+
+        // Badge definitions
+        const badges = {
+            'passwords': { name: 'Password Master', icon: '🔐', color: '#4CAF50' },
+            'phishing': { name: 'Phishing Detective', icon: '🕵️', color: '#2196F3' },
+            'privacy': { name: 'Privacy Guardian', icon: '🛡️', color: '#9C27B0' },
+            'cyberbullying': { name: 'Kindness Champion', icon: '💝', color: '#E91E63' },
+            'downloads': { name: 'Download Detective', icon: '⬇️', color: '#FF9800' },
+            'wifi': { name: 'WiFi Warrior', icon: '📶', color: '#607D8B' },
+            'social': { name: 'Social Media Star', icon: '👥', color: '#795548' },
+            'gaming': { name: 'Gaming Guardian', icon: '🎮', color: '#3F51B5' },
+            'digital': { name: 'Digital Citizen', icon: '⚖️', color: '#009688' },
+            'master': { name: 'Cyber Safety Master', icon: '👑', color: '#FFD700' }
+        };
+
+        // Initialize particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Eye tracking
+        function updateEyePosition(event) {
+            const leftPupil = document.getElementById('leftPupil');
+            const rightPupil = document.getElementById('rightPupil');
+            const foxyHead = document.querySelector('.foxy-head');
+            
+            if (!foxyHead) return;
+            
+            const headRect = foxyHead.getBoundingClientRect();
+            const headCenterX = headRect.left + headRect.width / 2;
+            const headCenterY = headRect.top + headRect.height / 2;
+            
+            const deltaX = event.clientX - headCenterX;
+            const deltaY = event.clientY - headCenterY;
+            
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxDistance = 3;
+            
+            const moveX = Math.max(-maxDistance, Math.min(maxDistance, deltaX / 20));
+            const moveY = Math.max(-maxDistance, Math.min(maxDistance, deltaY / 20));
+            
+            leftPupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            rightPupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        }
+
+        // Foxy speak function
+        function foxySpeak() {
+            const messages = [
+                "Hi there! I'm Foxy, your cyber safety buddy! 🦊",
+                "Ready to learn about staying safe online? Let's go!",
+                "Click on a quest to start your cyber safety adventure!",
+                "Remember, being safe online is super important!",
+                "You're doing great! Keep learning!"
+            ];
+            speak(messages[Math.floor(Math.random() * messages.length)]);
+        }
+
+        // Text to speech
+        function speak(text) {
+            if (currentSpeech) {
+                speechSynthesis.cancel();
+            }
+            currentSpeech = new SpeechSynthesisUtterance(text);
+            currentSpeech.rate = 0.9;
+            currentSpeech.pitch = 1.2;
+            speechSynthesis.speak(currentSpeech);
+        }
+
+        function stopSpeaking() {
+            if (currentSpeech) {
+                speechSynthesis.cancel();
+                currentSpeech = null;
+            }
+        }
+
+        // Initialize quests
+        function initializeQuests() {
+            const questsGrid = document.getElementById('questsGrid');
+            questsGrid.innerHTML = '';
+
+            quests.forEach((quest, index) => {
+                const isLocked = index > 0 && !gameState.completedQuests[quests[index - 1].id];
+                const isCompleted = gameState.completedQuests[quest.id];
+                const progress = gameState.questProgress[quest.id] || 0;
+
+                const questCard = document.createElement('div');
+                questCard.className = `quest-card ${isLocked ? 'locked' : ''} ${isCompleted ? 'completed' : ''}`;
+                
+                questCard.innerHTML = `
+                    <div class="quest-icon">${quest.icon}</div>
+                    <h3 class="quest-title">${quest.title}</h3>
+                    <p class="quest-description">${quest.description}</p>
+                    <div class="quest-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(progress / 3) * 100}%"></div>
+                        </div>
+                        <div class="level-indicator">Level ${progress}/3</div>
+                    </div>
+                    <button class="quest-button" onclick="startQuest('${quest.id}')" ${isLocked ? 'disabled' : ''}>
+                        ${isCompleted ? '✅ Quest Complete!' : isLocked ? '🔒 Locked' : '🚀 Start Quest'}
+                    </button>
+                `;
+
+                questsGrid.appendChild(questCard);
+            });
+        }
+
+        // Initialize badges display
+        function initializeBadges() {
+            const badgesGrid = document.getElementById('badgesGrid');
+            badgesGrid.innerHTML = '';
+
+            Object.keys(badges).forEach(badgeId => {
+                const badge = badges[badgeId];
+                const isEarned = gameState.completedQuests[badgeId] || (badgeId === 'master' && gameState.badges === 10);
+                
+                const badgeItem = document.createElement('div');
+                badgeItem.className = `badge-item ${isEarned ? 'earned' : ''} ${badgeId === 'master' ? 'master' : ''}`;
+                badgeItem.innerHTML = isEarned ? badge.icon : '?';
+                badgeItem.title = badge.name;
+                
+                badgesGrid.appendChild(badgeItem);
+            });
+        }
+
+        // Start quest
+        function startQuest(questId) {
+            const quest = quests.find(q => q.id === questId);
+            if (!quest) return;
+
+            const currentLevel = gameState.currentLevel[questId] || 0;
+            if (currentLevel >= 3) {
+                showBadge(questId);
+                return;
+            }
+
+            showLessonModal(quest, currentLevel);
+        }
+
+        // Show lesson modal
+        function showLessonModal(quest, level) {
+            const modal = document.getElementById('questModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.innerHTML = `
+                <div class="lesson-content">
+                    <h2 class="lesson-title">${quest.lesson.title}</h2>
+                    <div class="lesson-text">${quest.lesson.content}</div>
+                    <div class="audio-controls">
+                        <button class="audio-btn" onclick="speak(\`${quest.lesson.content.replace(/'/g, "\\\'").replace(/`/g, "\\`")}\`)">
+                            🔊 Listen to Foxy
+                        </button>
+                        <button class="audio-btn" onclick="stopSpeaking()">
+                            ⏹️ Stop
+                        </button>
+                    </div>
+                    <button class="quest-button" onclick="startQuestions('${quest.id}', ${level})">
+                        Start Level ${level + 1} Questions! 🎯
+                    </button>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        // Start questions
+        function startQuestions(questId, level) {
+            const quest = quests.find(q => q.id === questId);
+            const questionData = quest.levels[level];
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="question-container">
+                    <h2 class="lesson-title">Level ${level + 1}</h2>
+                    <div class="question">${questionData.question}</div>
+                    <div class="options">
+                        ${questionData.options.map((option, index) => 
+                            `<div class="option" onclick="selectAnswer('${questId}', ${level}, ${index}, ${questionData.correct})">${option}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Select answer
+        function selectAnswer(questId, level, selectedIndex, correctIndex) {
+            const options = document.querySelectorAll('.option');
+            
+            if (selectedIndex === correctIndex) {
+                options[selectedIndex].classList.add('correct');
+                createConfetti();
+                speak("Excellent! You got it right!");
+                
+                setTimeout(() => {
+                    gameState.currentLevel[questId] = (gameState.currentLevel[questId] || 0) + 1;
+                    gameState.questProgress[questId] = gameState.currentLevel[questId];
+                    gameState.xp += 100;
+                    
+                    if (gameState.currentLevel[questId] >= 3) {
+                        gameState.completedQuests[questId] = true;
+                        gameState.badges++;
+                        
+                        if (gameState.badges === 9) {
+                            gameState.badges++; // Master badge
+                            showMasterCertificate();
+                        } else {
+                            showBadge(questId);
+                        }
+                    } else {
+                        showNextLevelButton(questId, level);
+                    }
+                    
+                    updateStats();
+                    initializeQuests();
+                    initializeBadges();
+                    saveGame();
+                }, 2000);
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[correctIndex].classList.add('correct');
+                speak("Oops! Try again. The correct answer is highlighted!");
+                
+                setTimeout(() => {
+                    startQuestions(questId, level);
+                }, 2000);
+            }
+        }
+
+        // Show next level button
+        function showNextLevelButton(questId, level) {
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="lesson-content">
+                    <h2 class="lesson-title">🎉 Great Job!</h2>
+                    <div class="lesson-text">You've completed Level ${level + 1}! Ready for the next challenge?</div>
+                    <button class="next-level-btn" onclick="startQuest('${questId}')">
+                        Almost there! Go to Next Level 🚀
+                    </button>
+                </div>
+            `;
+        }
+
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#FFD700', '#FF6B35', '#4CAF50', '#2196F3', '#E91E63', '#9C27B0'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Show badge popup
+        function showBadge(questId) {
+            const badge = badges[questId];
+            const popup = document.createElement('div');
+            popup.className = 'badge-popup';
+            popup.innerHTML = `
+                <div class="badge-icon">${badge.icon}</div>
+                <h2 style="color: white; margin-bottom: 10px;">YAYY! 🎉</h2>
+                <h3 style="color: white; margin-bottom: 15px;">You've earned the</h3>
+                <h2 style="color: ${badge.color}; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${badge.name}</h2>
+                <p style="color: white; margin-top: 10px;">Keep up the amazing work!</p>
+            `;
+            
+            document.body.appendChild(popup);
+            createConfetti();
+            speak(`Congratulations! You've earned the ${badge.name} badge!`);
+            
+            setTimeout(() => {
+                popup.remove();
+                document.getElementById('questModal').style.display = 'none';
+            }, 4000);
+        }
+
+        // Show master certificate
+        function showMasterCertificate() {
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="certificate">
+                    <div class="certificate-title">🏆 CYBER SAFETY MASTER! 🏆</div>
+                    <div class="certificate-text">Congratulations!</div>
+                    <div class="certificate-text">You have successfully completed all cyber safety quests!</div>
+                    <div style="font-size: 4rem; margin: 20px 0;">👑</div>
+                    <div class="certificate-text">You are now a certified Cyber Safety Master!</div>
+                    <div style="margin-top: 20px; font-size: 1rem; color: #BF360C;">
+                        You've learned how to stay safe online and can help others do the same!
+                    </div>
+                    <button class="quest-button" onclick="document.getElementById('questModal').style.display = 'none'">
+                        Amazing! 🌟
+                    </button>
+                </div>
+            `;
+            
+            createConfetti();
+            speak("Congratulations! You are now a Cyber Safety Master! You've completed all the quests and learned how to stay safe online!");
+        }
+
+        // Chat functionality
+        function toggleChatbox() {
+            const chatbox = document.getElementById('chatbox');
+            chatbox.classList.toggle('expanded');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            // Simulate Foxy's response
+            setTimeout(() => {
+                const responses = [
+                    "That's a great question! Staying safe online is all about being smart and careful! 🦊",
+                    "Remember, never share your personal information with strangers online! 🔒",
+                    "If something online makes you uncomfortable, always tell a trusted adult! 💝",
+                    "Strong passwords are like super shields for your accounts! 🛡️",
+                    "Being kind online makes the internet a better place for everyone! 🌟",
+                    "When in doubt about something online, it's always better to ask for help! 🤝"
+                ];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                addChatMessage(response, 'foxy');
+            }, 1000);
+        }
+
+        function addChatMessage(message, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function handleChatEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Reset progress function
+        function resetProgress() {
+            if (confirm('Are you sure you want to restart your cyber safety adventure? All progress will be lost!')) {
+                // Clear all saved data
+                localStorage.removeItem('xp');
+                localStorage.removeItem('streak');
+                localStorage.removeItem('badges');
+                localStorage.removeItem('completedQuests');
+                localStorage.removeItem('questProgress');
+                localStorage.removeItem('currentLevel');
+                localStorage.removeItem('lastVisit');
+                
+                // Reset game state
+                gameState = {
+                    xp: 0,
+                    streak: 0,
+                    badges: 0,
+                    completedQuests: {},
+                    questProgress: {},
+                    currentLevel: {}
+                };
+                
+                // Reinitialize everything
+                initializeQuests();
+                initializeBadges();
+                updateStats();
+                
+                // Close any open modals
+                document.getElementById('questModal').style.display = 'none';
+                stopSpeaking();
+                
+                speak("Welcome back! Let's start your cyber safety adventure again!");
+            }
+        }
+
+        // Update stats
+        function updateStats() {
+            const maxXP = 900; // 9 quests * 100 XP each
+            const xpPercentage = (gameState.xp / maxXP) * 100;
+            
+            document.getElementById('xpFill').style.width = xpPercentage + '%';
+            document.getElementById('xpText').textContent = `${gameState.xp} / ${maxXP} XP`;
+            document.getElementById('streak').textContent = gameState.streak;
+            document.getElementById('badges').textContent = gameState.badges;
+        }
+
+        // Save game
+        function saveGame() {
+            localStorage.setItem('xp', gameState.xp);
+            localStorage.setItem('streak', gameState.streak);
+            localStorage.setItem('badges', gameState.badges);
+            localStorage.setItem('completedQuests', JSON.stringify(gameState.completedQuests));
+            localStorage.setItem('questProgress', JSON.stringify(gameState.questProgress));
+            localStorage.setItem('currentLevel', JSON.stringify(gameState.currentLevel));
+        }
+
+        // Modal close functionality
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('questModal').style.display = 'none';
+            stopSpeaking();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('questModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                stopSpeaking();
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initializeQuests();
+            initializeBadges();
+            updateStats();
+            
+            // Update streak daily - fixed logic
+            const lastVisit = localStorage.getItem('lastVisit');
+            const today = new Date().toDateString();
+            
+            if (!lastVisit) {
+                // First visit
+                gameState.streak = 1;
+                localStorage.setItem('lastVisit', today);
+            } else if (lastVisit !== today) {
+                // Calculate days difference
+                const lastDate = new Date(lastVisit);
+                const currentDate = new Date(today);
+                const daysDiff = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24));
+                
+                if (daysDiff === 1) {
+                    // Consecutive day
+                    gameState.streak++;
+                } else if (daysDiff > 1) {
+                    // Gap in visits, reset streak
+                    gameState.streak = 1;
+                }
+                
+                localStorage.setItem('lastVisit', today);
+            }
+            
+            saveGame();
+            updateStats();
+        });
+
+        // Mouse tracking for eyes
+        document.addEventListener('mousemove', updateEyePosition);
+    </script>
+</body>
+</html>
