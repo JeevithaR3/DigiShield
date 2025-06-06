@@ -52,7 +52,7 @@ Click Load Unpacked and select the /extension folder
 Open dashboard/overview.html in your browser to monitor scanned messages.
 
 📦 Tech Stack
-Frontend: HTML, Tailwind CSS, JavaScript
+Frontend: HTML, CSS, JavaScript
 
 Backend: Python, Flask, Transformers
 
