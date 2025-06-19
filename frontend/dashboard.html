@@ -44,6 +44,10 @@
         </a>
     </aside>
     <main class="main-content">
+        <div id="user-info" class="user-info-banner" style="background: #eef9ff; padding: 10px 20px; border-radius: 8px; margin-bottom: 20px;">
+  Loading user info...
+</div>
+
         <div class="dashboard-welcome">
             <h2>Welcome to the DigiShield Dashboard</h2>
             <p>Protecting Children Online, One Message at a Time</p>
@@ -60,5 +64,27 @@
     <footer>
         <p>DigiShield &copy; 2025. Protecting Children Online</p>
     </footer>
+    <script>
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get('email');
+
+  if (email) {
+    fetch(`http://localhost:5500/user/${email}`)
+      .then(res => res.json())
+      .then(user => {
+        const infoBox = document.getElementById('user-info');
+        infoBox.innerHTML = `
+          <strong>Logged in as:</strong> ${user.username} (${user.email})<br>
+          <strong>Phone:</strong> ${user.phone}
+        `;
+      })
+      .catch(() => {
+        document.getElementById('user-info').innerText = 'Error loading user info.';
+      });
+  } else {
+    document.getElementById('user-info').innerText = 'No user email provided.';
+  }
+</script>
+
 </body>
 </html>

@@ -41,6 +41,7 @@ app.post('/signup', async (req, res) => {
 });
 
 // Login route
+// Login route (updated to return user data)
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,12 +52,40 @@ app.post('/login', async (req, res) => {
       return res.status(401).send('Invalid email or password.');
     }
 
-    res.send('Login successful!');
+    // ✅ Send user data to frontend (excluding password)
+    res.json({
+      message: 'Login successful!',
+      user: {
+        username: user.username,
+        email: user.email,
+        phone: user.phone
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error.');
   }
 });
+// Get user details by email (for dashboard)
+app.get('/user/:email', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    res.json({
+      username: user.username,
+      email: user.email,
+      phone: user.phone
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error.');
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

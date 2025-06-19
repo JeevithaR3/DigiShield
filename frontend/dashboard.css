@@ -6,6 +6,25 @@
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
+        .user-info {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logout-btn {
+  padding: 5px 10px;
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
 
         html, body {
             margin: 0;

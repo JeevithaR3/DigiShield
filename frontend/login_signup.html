@@ -163,35 +163,40 @@
     }
 
     // Handle login form submit
-    async function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const loginMessage = document.getElementById('login-message');
+    // Handle login form submit
+async function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const loginMessage = document.getElementById('login-message');
 
-      try {
-        const response = await fetch('http://localhost:5500/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-        const result = await response.text();
+  try {
+    const response = await fetch('http://localhost:5500/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-        if (response.ok) {
-          loginMessage.style.color = 'green';
-          loginMessage.textContent = 'Login successful! Redirecting...';
-          setTimeout(() => {
-            window.location.replace('dashboard.html');
-          }, 1500);
-        } else {
-          loginMessage.style.color = 'red';
-          loginMessage.textContent = result;
-        }
-      } catch (err) {
-        loginMessage.style.color = 'red';
-        loginMessage.textContent = 'An error occurred while logging in.';
-      }
+    if (response.ok) {
+      const result = await response.json();
+      loginMessage.style.color = 'green';
+      loginMessage.textContent = 'Login successful! Redirecting...';
+
+      // ✅ Redirect to dashboard with email in query string
+      setTimeout(() => {
+        window.location.href = `dashboard.html?email=${encodeURIComponent(result.user.email)}`;
+      }, 1500);
+    } else {
+      const errorText = await response.text();
+      loginMessage.style.color = 'red';
+      loginMessage.textContent = errorText;
     }
+  } catch (err) {
+    loginMessage.style.color = 'red';
+    loginMessage.textContent = 'An error occurred while logging in.';
+  }
+}
+
 
     // Handle signup form submit
     async function handleSignup(event) {
