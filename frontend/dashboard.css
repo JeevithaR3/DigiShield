@@ -395,4 +395,43 @@
         * {
             transition: all 0.3s ease;
         }
+        .user-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 15px;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.user-dropdown i {
+  margin-right: 6px;
+  color: #007bff;
+  font-size: 18px;
+}
+
+.user-hover-info {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 220px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  z-index: 1;
+  top: 30px;
+  font-size: 14px;
+}
+
+.user-dropdown:hover .user-hover-info {
+  display: block;
+}
+
+.user-hover-info p {
+  margin: 5px 0;
+  font-weight: 400;
+}
+
     
