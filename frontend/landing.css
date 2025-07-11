@@ -76,6 +76,22 @@ body {
   color: #22543d;
   margin-bottom: 1rem;
 }
+.cta-button.chat-cta {
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-top: 12px;
+}
+
+.cta-button.chat-cta:hover {
+    background-color: #e55a5a;
+}
+
 
 .subtitle {
   font-size: 1.1rem;
