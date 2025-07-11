@@ -6,14 +6,14 @@
     <title>Support Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="support.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs-com/3.2.0/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
         <div class="nav-links">
             <a href="dashboard.html">Dashboard</a>
-            <a href="alerts.html" >Alerts</a>
+            <a href="alerts.html">Alerts</a>
             <a href="flagged.html">Flagged</a>
             <a href="settings.html">Settings</a>
         </div>
@@ -149,20 +149,32 @@
         <script>
             // Initialize EmailJS
             emailjs.init("BAsL7cIKXbw32b_Ew"); // Your EmailJS public key
-            
-            // FAQ functionality
-            document.querySelectorAll('.faq-question').forEach(button => {
-                button.addEventListener('click', () => {
-                    const faqItem = button.parentElement;
-                    faqItem.classList.toggle('active');
 
-                    const arrow = button.querySelector('i');
+            // FAQ robust toggle
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(button => {
+                button.addEventListener('click', function() {
+                    const faqItem = this.closest('.faq-item');
+                    // Close all other
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        if (item !== faqItem) {
+                            item.classList.remove('active');
+                            const icon = item.querySelector('i');
+                            if (icon) {
+                                icon.classList.remove('fa-chevron-up');
+                                icon.classList.add('fa-chevron-down');
+                            }
+                        }
+                    });
+                    // Toggle current
+                    faqItem.classList.toggle('active');
+                    const icon = this.querySelector('i');
                     if (faqItem.classList.contains('active')) {
-                        arrow.classList.remove('fa-chevron-down');
-                        arrow.classList.add('fa-chevron-up');
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
                     } else {
-                        arrow.classList.remove('fa-chevron-up');
-                        arrow.classList.add('fa-chevron-down');
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
                     }
                 });
             });
@@ -170,32 +182,21 @@
             // Form submission functionality
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
                 const name = document.getElementById('name').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const message = document.getElementById('message').value.trim();
                 const successMessage = document.getElementById('successMessage');
                 const errorMessage = document.getElementById('errorMessage');
                 const submitBtn = document.querySelector('.submit-btn');
-                
-                // Hide previous messages
                 successMessage.style.display = 'none';
                 errorMessage.style.display = 'none';
-                
-                // Validate form
                 if (!name || !email || !message) {
                     errorMessage.textContent = 'Please fill in all fields before sending your message.';
                     errorMessage.style.display = 'block';
                     return;
                 }
-                
-                // Show loading state
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
-                
-                // For now, just show success message (replace with EmailJS when template is ready)
-                
-            
                 emailjs.send('service_eqy2ihh', 'template_i091is7', {
                     from_name: name,
                     from_email: email,
@@ -205,22 +206,18 @@
                     successMessage.textContent = 'Thank you for your message! We will get back to you soon.';
                     successMessage.style.display = 'block';
                     document.getElementById('contactForm').reset();
-                    
                     submitBtn.textContent = 'Send Message';
                     submitBtn.disabled = false;
-                    
                     setTimeout(() => {
                         successMessage.style.display = 'none';
                     }, 5000);
-                    
                 }, function(error) {
+                    console.error('EmailJS Error:', error);
                     errorMessage.textContent = 'Failed to send message. Please try again or contact support directly.';
                     errorMessage.style.display = 'block';
-                    
                     submitBtn.textContent = 'Send Message';
                     submitBtn.disabled = false;
                 });
-                
             });
         </script>
     </main>
