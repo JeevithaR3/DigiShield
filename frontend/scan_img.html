@@ -8,267 +8,284 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
-        <div class="nav-links">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="alerts.html">Alerts</a>
-            <a href="flagged.html">Flagged</a>
-            <a href="settings.html">Settings</a>
-        </div>
-    </nav>
-    
-    <aside class="dashboard-sidebar">
-        <a href="overview.html">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-house sidebar-icon"></i>
-            </div>
-            Overview
-        </a>
-        <a href="scan_img.html" class="active">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
-            </div>
-            Upload Scan
-        </a>
-        <a href="alert_history.html">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
-            </div>
-            Alert History
-        </a>
-        <a href="support.html">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-comments sidebar-icon"></i>
-            </div>
-            Support
-        </a>
-    </aside>
-    
-    <div class="upload-scan-container">
-        <header class="page-header">
-            <h1 class="page-title">
-                <i class="fa-solid fa-shield-halved"></i>
-                File Security Scan
-            </h1>
-            <p class="page-subtitle">Upload your files for comprehensive security analysis</p>
-        </header>
+  <nav class="navbar">
+    <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="alerts.html">Alerts</a>
+      <a href="flagged.html">Flagged</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </nav>
 
-        <div class="scan-mascot">
-            <img src="https://i.pinimg.com/736x/a2/a2/c6/a2a2c61877253fda98837fdb85e47769.jpg" alt="DigiShield Mascot" class="mascot-image" />
-            <div class="mascot-bubble">
-                Hi! I'm Digi, your digital security guardian.<br>
-                Drop your file here and I'll scan it thoroughly for any threats!
-            </div>
-        </div>
+  <aside class="dashboard-sidebar">
+    <a href="overview.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-house sidebar-icon"></i>
+      </div>
+      Overview
+    </a>
+    <a href="scan_img.html" class="active">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
+      </div>
+      Upload Scan
+    </a>
+    <a href="alert_history.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
+      </div>
+      Alert History
+    </a>
+    <a href="support.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-comments sidebar-icon"></i>
+      </div>
+      Support
+    </a>
+  </aside>
 
-        <form id="scanForm" class="upload-form">
-            <div class="file-drop-zone" id="dropZone">
-                <input type="file" id="scanFile" name="scanFile" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt,.zip" required class="file-input">
-                <div class="upload-icon">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                </div>
-                <div class="upload-text">Drop your file here or click to browse</div>
-                <div class="upload-subtext">Maximum file size: 10MB</div>
-                <div class="file-types">
-                    <span class="file-type">JPG</span>
-                    <span class="file-type">PNG</span>
-                    <span class="file-type">PDF</span>
-                    <span class="file-type">DOC</span>
-                    <span class="file-type">TXT</span>
-                    <span class="file-type">ZIP</span>
-                </div>
-            </div>
+  <div class="upload-scan-container">
+    <header class="page-header">
+      <h1 class="page-title">
+        <i class="fa-solid fa-shield-halved"></i>
+        File Security Scan
+      </h1>
+      <p class="page-subtitle">Upload your files for comprehensive security analysis</p>
+    </header>
 
-            <div id="filePreview" class="file-preview">
-                <img id="previewImg" class="preview-image" style="display:none;">
-                <div id="fileInfo" class="file-info" style="display:none;">
-                    <div id="fileName" class="file-name"></div>
-                    <div id="fileSize" class="file-size"></div>
-                </div>
-            </div>
-
-            <button type="submit" class="scan-button" id="scanBtn">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Start Security Scan
-            </button>
-        </form>
-
-        <div id="scanProgress" class="scan-progress">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-bar-fill" id="progressFill"></div>
-                </div>
-            </div>
-            <div class="progress-text">
-                <div class="progress-spinner"></div>
-                <span id="progressText">Initializing scan...</span>
-            </div>
-        </div>
-
-        <div id="scanResult" class="scan-result"></div>
+    <div class="scan-mascot">
+      <img src="https://i.pinimg.com/736x/a2/a2/c6/a2a2c61877253fda98837fdb85e47769.jpg" alt="DigiShield Mascot" class="mascot-image" />
+      <div class="mascot-bubble">
+        Hi! I'm Digi, your digital security guardian.<br>
+        Drop your file here and I'll scan it thoroughly for any threats!
+      </div>
     </div>
 
-    <script>
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('scanFile');
-        const filePreview = document.getElementById('filePreview');
-        const previewImg = document.getElementById('previewImg');
-        const fileInfo = document.getElementById('fileInfo');
-        const fileName = document.getElementById('fileName');
-        const fileSize = document.getElementById('fileSize');
-        const scanForm = document.getElementById('scanForm');
-        const scanBtn = document.getElementById('scanBtn');
-        const scanProgress = document.getElementById('scanProgress');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-        const scanResult = document.getElementById('scanResult');
+    <form id="scanForm" class="upload-form">
+      <div class="file-drop-zone" id="dropZone">
+        <input type="file" id="scanFile" name="scanFile" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.txt,.zip" required class="file-input">
+        <div class="upload-icon">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+        <div class="upload-text">Drop your file here or click to browse</div>
+        <div class="upload-subtext">Maximum file size: 10MB</div>
+        <div class="file-types">
+          <span class="file-type">JPG</span>
+          <span class="file-type">PNG</span>
+          <span class="file-type">PDF</span>
+          <span class="file-type">DOC</span>
+          <span class="file-type">TXT</span>
+          <span class="file-type">ZIP</span>
+        </div>
+      </div>
 
-        // Format file size
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
+      <div id="filePreview" class="file-preview">
+        <img id="previewImg" class="preview-image" style="display:none;">
+        <div id="fileInfo" class="file-info" style="display:none;">
+          <div id="fileName" class="file-name"></div>
+          <div id="fileSize" class="file-size"></div>
+        </div>
+      </div>
 
-        // Handle drag and drop
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
+      <button type="submit" class="scan-button" id="scanBtn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Start Security Scan
+      </button>
+    </form>
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
-        });
+    <div id="scanProgress" class="scan-progress">
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+      </div>
+      <div class="progress-text">
+        <div class="progress-spinner"></div>
+        <span id="progressText">Initializing scan...</span>
+      </div>
+    </div>
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                handleFileSelect(files[0]);
-            }
-        });
+    <div id="scanResult" class="scan-result"></div>
+  </div>
 
-        dropZone.addEventListener('click', () => {
-            fileInput.click();
-        });
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('scanFile');
+    const filePreview = document.getElementById('filePreview');
+    const previewImg = document.getElementById('previewImg');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const scanForm = document.getElementById('scanForm');
+    const scanBtn = document.getElementById('scanBtn');
+    const scanProgress = document.getElementById('scanProgress');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const scanResult = document.getElementById('scanResult');
 
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files[0]);
-            }
-        });
+    function formatFileSize(bytes) {
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(1024));
+      return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
+    }
 
-        function handleFileSelect(file) {
-            // Show file info
-            fileName.textContent = file.name;
-            fileSize.textContent = formatFileSize(file.size);
-            fileInfo.style.display = 'block';
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
 
-            // Show image preview if it's an image
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewImg.src = e.target.result;
-                    previewImg.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                previewImg.style.display = 'none';
-            }
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('click', () => fileInput.click());
 
-            // Show preview with animation
-            filePreview.classList.add('show');
-        }
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        handleFileSelect(files[0]);
+      }
+    });
 
-        // Handle form submission
-        scanForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            if (fileInput.files.length === 0) {
-                showResult('Please select a file to scan.', 'error');
-                return;
-            }
+    fileInput.addEventListener('change', e => {
+      if (e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
 
-            startScan();
-        });
+    function handleFileSelect(file) {
+      fileName.textContent = file.name;
+      fileSize.textContent = formatFileSize(file.size);
+      fileInfo.style.display = 'block';
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewImg.style.display = 'none';
+      }
+      filePreview.classList.add('show');
+    }
 
-        function startScan() {
-            // Reset and show progress
-            scanResult.classList.remove('show');
-            scanProgress.classList.add('show');
-            scanBtn.disabled = true;
-            progressFill.style.width = '0%';
+    scanForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = fileInput.files[0];
+      if (!file) return showResult('Please select a file.', 'error');
 
-            const progressSteps = [
-                { progress: 20, text: 'Analyzing file structure...', delay: 500 },
-                { progress: 40, text: 'Checking for malware signatures...', delay: 800 },
-                { progress: 60, text: 'Scanning for suspicious patterns...', delay: 700 },
-                { progress: 80, text: 'Performing deep security analysis...', delay: 600 },
-                { progress: 100, text: 'Finalizing scan results...', delay: 400 }
-            ];
+      if (file.size > 10 * 1024 * 1024) {
+        return showResult('File size exceeds 10MB.', 'error');
+      }
 
-            let currentStep = 0;
+      scanResult.classList.remove('show');
+      scanProgress.classList.add('show');
+      scanBtn.disabled = true;
+      progressText.textContent = 'Starting scan...';
+      progressFill.style.width = '20%';
 
-            function runNextStep() {
-                if (currentStep < progressSteps.length) {
-                    const step = progressSteps[currentStep];
-                    progressText.textContent = step.text;
-                    progressFill.style.width = step.progress + '%';
-                    
-                    setTimeout(() => {
-                        currentStep++;
-                        runNextStep();
-                    }, step.delay);
-                } else {
-                    finishScan();
-                }
-            }
+      if (file.name.endsWith('.txt')) {
+        const text = await file.text();
+        const sentences = text.split(/\n+/).map(t => t.trim()).filter(Boolean);
+        progressText.textContent = 'Sending to toxicity engine...';
+        progressFill.style.width = '50%';
 
-            runNextStep();
-        }
+        try {
+          const res = await fetch("http://127.0.0.1:5000/analyze_batch", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ texts: sentences, url: window.location.href })
+          });
+          const result = await res.json();
+          progressFill.style.width = '100%';
 
-        function finishScan() {
-            setTimeout(() => {
-                scanProgress.classList.remove('show');
-                scanBtn.disabled = false;
-                
-                // Simulate different scan results
-                const results = [
-                    { type: 'success', icon: 'fa-check-circle', text: '✅ File is clean and safe to use!' },
-                    { type: 'warning', icon: 'fa-exclamation-triangle', text: '⚠️ Minor security concerns detected. Review recommended.' },
-                    { type: 'success', icon: 'fa-shield-check', text: '🛡️ No threats detected. File passed all security checks.' }
-                ];
-                
-                const randomResult = results[Math.floor(Math.random() * results.length)];
-                showResult(randomResult.text, randomResult.type);
-            }, 500);
-        }
-
-        function showResult(message, type) {
-              scanResult.className = `scan-result ${type} show`;
-              scanResult.innerHTML = `
-                  <div>
-                      <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-times-circle'} result-icon"></i>
-                      <div class="result-text">${message}</div>
-                  </div>
-              `;
+          const toxicSentences = result.filter(r => r.label === 'toxic');
+          if (toxicSentences.length > 0) {
+            showResult(`⚠️ ${toxicSentences.length} toxic sentence(s) found.<br><em>Example:</em> "${toxicSentences[0].text}"`, 'warning');
+          } else {
+            showResult('✅ No toxic content detected in file.', 'success');
           }
+        } catch (err) {
+          console.error(err);
+          showResult('⚠️ Error contacting server.', 'error');
+        }
 
-        // File input validation
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file && file.size > 10 * 1024 * 1024) { // 10MB limit
-                showResult('File size exceeds 10MB limit. Please choose a smaller file.', 'error');
-                fileInput.value = '';
-                filePreview.classList.remove('show');
-            }
-        });
-    </script>
-   
+      } else {
+        const steps = [
+          { text: 'Scanning for threats...', width: 50, delay: 600 },
+          { text: 'Analyzing file metadata...', width: 80, delay: 700 },
+          { text: 'Scan complete.', width: 100, delay: 500 }
+        ];
+        let i = 0;
+        const runSteps = () => {
+          if (i >= steps.length) return showResult('✅ File is clean and safe to use.', 'success');
+          const step = steps[i];
+          progressText.textContent = step.text;
+          progressFill.style.width = `${step.width}%`;
+          i++;
+          setTimeout(runSteps, step.delay);
+        };
+        runSteps();
+      }
+
+      scanProgress.classList.remove('show');
+      scanBtn.disabled = false;
+    });
+
+    function showResult(message, type) {
+      scanResult.className = `scan-result ${type} show`;
+      scanResult.innerHTML = `
+        <div>
+          <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-times-circle'} result-icon"></i>
+          <div class="result-text">${message}</div>
+        </div>
+      `;
+    }
+  </script>
+
+  <style>
+    .scan-result {
+      margin-top: 20px;
+      font-family: Poppins, sans-serif;
+      font-size: 16px;
+    }
+
+    .scan-result.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      padding: 12px 20px;
+      border-radius: 6px;
+    }
+
+    .scan-result.warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 12px 20px;
+      border-radius: 6px;
+    }
+
+    .scan-result.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 12px 20px;
+      border-radius: 6px;
+    }
+
+    .scan-result .result-text {
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .scan-result i {
+      font-size: 20px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+  </style>
 </body>
 </html>
