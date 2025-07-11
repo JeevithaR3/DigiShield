@@ -1,85 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flagged Messages - DigiShield</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="flagged.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flagged Messages - DigiShield</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="flagged.css">
 </head>
 <body>
-    <nav class="navbar">
-        <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
-        <div class="nav-links">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="alerts.html">Alerts</a>
-            <a href="flagged.html" class="active">Flagged</a>
-            <a href="settings.html">Settings</a>
-        </div>
-    </nav>
-    <aside class="dashboard-sidebar">
-        <a href="overview.html" >
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-house sidebar-icon"></i>
-            </div>
-            Overview
-        </a>
-        <a href="scan_img.html">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
-            </div>
-            Upload Scan
-        </a>
-        <a href="alert_history.html">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
-            </div>
-            Alert History
-        </a>
-        <a href="support.html">
-            <div class="sidebar-icon-container">
-                <i class="fa-solid fa-comments sidebar-icon"></i>
-            </div>
-            Support
-        </a>
-    </aside>
-    <main class="main-content">
-        <h2>Flagged Messages</h2>
-        <br>
-        <div class="flagged-list">
-            <!-- Example flagged messages -->
-            <div class="flagged-card">
-                <div class="flagged-meta">
-                    <span class="flagged-user">👤 JohnDoe123</span>
-                    <span class="flagged-time">2 hours ago</span>
-                </div>
-                <div class="flagged-message">
-                    "Hey, can you send me your address? I want to send you a gift."
-                </div>
-                <div class="flagged-actions">
-                    <button class="primary-btn small">Mark as Safe</button>
-                    <button class="danger-btn small">Report</button>
-                </div>
-            </div>
-            <br><br>
-            <div class="flagged-card">
-                <div class="flagged-meta">
-                    <span class="flagged-user">👤 CoolKid99</span>
-                    <span class="flagged-time">Yesterday</span>
-                </div>
-                <div class="flagged-message">
-                    "Let's keep this our little secret, okay?"
-                </div>
-                <div class="flagged-actions">
-                    <button class="primary-btn small">Mark as Safe</button>
-                    <button class="danger-btn small">Report</button>
-                </div>
-            </div>
-            <!--More flagged-card blocks -->
-        </div>
-    </main>
-    <footer>
-        <p>DigiShield &copy; 2025. Protecting Children Online</p>
-    </footer>
+  <nav class="navbar">
+    <span class="logo-text"><span class="logo-icon">🛡️</span>DIGI SHIELD</span>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="alerts.html">Alerts</a>
+      <a href="flagged.html" class="active">Flagged</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </nav>
+
+  <aside class="dashboard-sidebar">
+    <a href="overview.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-house sidebar-icon"></i>
+      </div>
+      Overview
+    </a>
+    <a href="scan_img.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-cloud-arrow-up sidebar-icon"></i>
+      </div>
+      Upload Scan
+    </a>
+    <a href="alert_history.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-clock-rotate-left sidebar-icon"></i>
+      </div>
+      Alert History
+    </a>
+    <a href="support.html">
+      <div class="sidebar-icon-container">
+        <i class="fa-solid fa-comments sidebar-icon"></i>
+      </div>
+      Support
+    </a>
+  </aside>
+
+  <main class="main-content">
+    <h2>Flagged Messages</h2>
+    <br>
+    
+    <!-- Chart section -->
+    <h3 style="margin-top: 30px;">📈 Toxic Messages Trend</h3>
+    <canvas id="toxicTrendChart" width="100%" height="60"></canvas>
+  </main>
+
+  <footer>
+    <p>DigiShield &copy; 2025. Protecting Children Online</p>
+  </footer>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Chart initialization script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("http://127.0.0.1:5000/api/messages")
+        .then(res => res.json())
+        .then(data => {
+          const countByDate = {};
+
+          data.forEach(entry => {
+            const date = new Date(entry.timestamp).toLocaleDateString();
+            countByDate[date] = (countByDate[date] || 0) + 1;
+          });
+
+          const labels = Object.keys(countByDate).sort((a, b) => new Date(a) - new Date(b));
+          const values = labels.map(date => countByDate[date]);
+
+          const ctx = document.getElementById("toxicTrendChart").getContext("2d");
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: labels,
+              datasets: [{
+                label: "Toxic Messages per Day",
+                data: values,
+                fill: true,
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: true },
+                tooltip: {
+                  mode: 'index',
+                  intersect: false,
+                  backgroundColor: 'rgba(0,0,0,0.8)',
+                  titleFont: { size: 16 },
+                  bodyFont: { size: 14 },
+                  padding: 10,
+                  cornerRadius: 6
+                }
+              },
+              animation: {
+                duration: 1500,
+                easing: 'easeInOutQuart'
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "Date",
+                    font: { size: 14, weight: 'bold' }
+                  }
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "Toxic Message Count",
+                    font: { size: 14, weight: 'bold' }
+                  },
+                  beginAtZero: true,
+                  ticks: {
+                    stepSize: 1
+                  }
+                }
+              }
+            }
+          });
+        })
+        .catch(err => {
+          console.error("Chart loading error:", err);
+        });
+    });
+  </script>
 </body>
 </html>

@@ -47,52 +47,63 @@
     <div class="main-wrapper">
         <main class="main-content">
             <h2>Alerts</h2>
-            <section class="alerts-list">
-                
-                <div class="alert-card">
+<section class="alerts-list" id="alertsContainer">
+            <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("alertsContainer");
+
+    fetch("http://127.0.0.1:5000/api/messages")
+        .then(response => {
+            if (!response.ok) throw new Error("Network response failed");
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                container.innerHTML = "<p>No alerts found yet.</p>";
+                return;
+            }
+
+            data.forEach(alert => {
+                const riskLevel = alert.risk_score >= 80 ? 'error' :
+                                  alert.risk_score >= 50 ? 'warning' : 'info';
+
+                const date = new Date(alert.timestamp);
+                const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const dateStr = date.toLocaleDateString();
+
+                const alertCard = document.createElement("div");
+                alertCard.className = "alert-card";
+
+                alertCard.innerHTML = `
                     <div class="alert-header">
-                        <span class="alert-badge warning">Warning</span>
-                        <button class="alert-action">Dismiss</button>
-                    </div>
-                    <div class="alert-details">
-                        <strong>Type:</strong> Suspicious Link<br>
-                        <strong>Message:</strong> "Check out this cool site: bit.ly/xyz123"<br>
-                        <strong>Time:</strong> 10:32 AM, Today<br>
-                        <strong>Description:</strong> This link has been flagged as suspicious by our system.
-                    </div>
-                </div>
-                
-                <div class="alert-card">
-                    <div class="alert-header">
-                        <span class="alert-badge error">Error</span>
+                        <span class="alert-badge ${riskLevel}">
+                            ${riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1)}
+                        </span>
                         <button class="alert-action">View details</button>
                     </div>
                     <div class="alert-details">
-                        <strong>Type:</strong> Inappropriate Language<br>
-                        <strong>Message:</strong> "You're so dumb!"<br>
-                        <strong>Time:</strong> 9:50 AM, Today<br>
-                        <strong>Description:</strong> This message contains language that is not suitable for all audiences.
+                        <strong>Type:</strong> ${alert.bert_label}<br>
+                        <strong>Message:</strong> "${alert.text}"<br>
+                        <strong>Time:</strong> ${timeStr}, ${dateStr}<br>
+                        <strong>Website:</strong> <code>${alert.url}</code><br>
+                        <strong>Description:</strong> This content was flagged by AI Defender with a risk score of ${alert.risk_score}%.
                     </div>
-                </div>
-                
-                <div class="alert-card">
-                    <div class="alert-header">
-                        <span class="alert-badge info">Info</span>
-                        <button class="alert-action">Respond</button>
-                    </div>
-                    <div class="alert-details">
-                        <strong>Type:</strong> Personal Info Request<br>
-                        <strong>Message:</strong> "What's your address?"<br>
-                        <strong>Time:</strong> 8:15 AM, Today<br>
-                        <strong>Description:</strong> This message is requesting personal information.
-                    </div>
-                </div>
-                
-            </section>
+                `;
+
+                container.appendChild(alertCard);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading alerts:", error);
+            container.innerHTML = `<p style="color: red;">Failed to load alerts. Please try again later.</p>`;
+        });
+});
+</script>
+</section>
+
+
         </main>
     </div>
-    <footer>
-        <p>DigiShield &copy; 2025. Protecting Children Online</p>
-    </footer>
+    
 </body>
 </html>
