@@ -4,8 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Flagged Messages - DigiShield</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="flagged.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="flagged.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar">
@@ -48,87 +68,83 @@
   <main class="main-content">
     <h2>Flagged Messages</h2>
     <br>
-    
-    <!-- Chart section -->
-    <h3 style="margin-top: 30px;">📈 Toxic Messages Trend</h3>
-    <canvas id="toxicTrendChart" width="100%" height="60"></canvas>
+
+    <div class="chart-container">
+      <canvas id="flaggedChart"></canvas>
+    </div>
   </main>
 
   <footer>
     <p>DigiShield &copy; 2025. Protecting Children Online</p>
   </footer>
 
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Chart initialization script -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       fetch("http://127.0.0.1:5000/api/messages")
         .then(res => res.json())
         .then(data => {
-          const countByDate = {};
+          const uniqueDayUrl = {};
 
           data.forEach(entry => {
-            const date = new Date(entry.timestamp).toLocaleDateString();
+            if (!entry.timestamp || !entry.url) return;
+            const date = new Date(entry.timestamp).toISOString().split("T")[0];
+            const key = `${date}_${entry.url}`;
+            uniqueDayUrl[key] = true;
+          });
+
+          // Aggregate by date
+          const countByDate = {};
+          Object.keys(uniqueDayUrl).forEach(key => {
+            const date = key.split("_")[0];
             countByDate[date] = (countByDate[date] || 0) + 1;
           });
 
-          const labels = Object.keys(countByDate).sort((a, b) => new Date(a) - new Date(b));
-          const values = labels.map(date => countByDate[date]);
+          const sortedDates = Object.keys(countByDate).sort();
+          const counts = sortedDates.map(date => countByDate[date]);
 
-          const ctx = document.getElementById("toxicTrendChart").getContext("2d");
+          const ctx = document.getElementById("flaggedChart").getContext("2d");
           new Chart(ctx, {
             type: "line",
             data: {
-              labels: labels,
+              labels: sortedDates,
               datasets: [{
-                label: "Toxic Messages per Day",
-                data: values,
-                fill: true,
+                label: "Toxic URLs Flagged per Day",
+                data: counts,
                 backgroundColor: "rgba(255, 99, 132, 0.2)",
                 borderColor: "rgba(255, 99, 132, 1)",
                 borderWidth: 2,
+                fill: true,
                 tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
+                pointRadius: 5,
+                pointHoverRadius: 7
               }]
             },
             options: {
               responsive: true,
-              plugins: {
-                legend: { display: true },
-                tooltip: {
-                  mode: 'index',
-                  intersect: false,
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  titleFont: { size: 16 },
-                  bodyFont: { size: 14 },
-                  padding: 10,
-                  cornerRadius: 6
-                }
-              },
               animation: {
-                duration: 1500,
-                easing: 'easeInOutQuart'
+                duration: 1000,
+                easing: "easeOutQuart"
               },
               scales: {
+                y: {
+                  beginAtZero: true,
+                  title: { display: true, text: "Count" }
+                },
                 x: {
-                  title: {
-                    display: true,
-                    text: "Date",
-                    font: { size: 14, weight: 'bold' }
+                  title: { display: true, text: "Date" }
+                }
+              },
+              plugins: {
+                legend: {
+                  display: true,
+                  labels: {
+                    color: "#333",
+                    font: { size: 14 }
                   }
                 },
-                y: {
-                  title: {
-                    display: true,
-                    text: "Toxic Message Count",
-                    font: { size: 14, weight: 'bold' }
-                  },
-                  beginAtZero: true,
-                  ticks: {
-                    stepSize: 1
+                tooltip: {
+                  callbacks: {
+                    label: ctx => ` ${ctx.raw} toxic page(s)`
                   }
                 }
               }
@@ -136,7 +152,7 @@
           });
         })
         .catch(err => {
-          console.error("Chart loading error:", err);
+          console.error("Failed to load flagged chart:", err);
         });
     });
   </script>
