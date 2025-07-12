@@ -279,6 +279,16 @@ footer {
     z-index: 9998;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
+.challenge-foxy .foxy-btn {
+  text-decoration: none;
+  color: #fff;
+  background: none;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 
 .challenge-foxy:hover {
     background-color: #ec6445;
